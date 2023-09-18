@@ -1,0 +1,84 @@
+// .admin-project-table {
+//     .table-header {
+//         display: flex;
+//         gap: 20px;
+//         background-color: rgba(153, 156, 165,0.2);
+//         p {
+//             font-weight: 700;
+//             font-size: 16px;
+//             color: var(--color-accent-3);
+//             padding: 10px 0;
+//             white-space: nowrap;
+//             width: 120px;
+//             overflow: hidden;
+//             min-width: 120px;
+//             max-width: 120px;
+//             text-align: center;
+//         }
+//         .title {
+//             width: 100%;
+//             max-width: 260px;
+//             overflow: hidden;
+//             min-width: none;
+//         }
+//         .action {
+//             // margin-right: 40px;
+//         }
+//     }
+//     .table-data {
+//         display: flex;
+//         gap: 20px;
+//         p {
+//             font-size: 16px;
+//             padding: 10px 0;
+//             white-space: nowrap;
+//             width: 120px;
+//             overflow: hidden;
+//             min-width: 120px;
+//             max-width: 120px;
+//             text-align: center;
+//         }
+//         .title {
+//             width: 100%;
+//             max-width: 200px;
+//             overflow: hidden;
+//             min-width: none;
+//         }
+//         .action {
+//             // margin-right: 40px;
+//             white-space: nowrap;
+//             text-transform: capitalize;
+//             text-decoration: underline;
+//         }
+//     }
+// }
+
+
+// <div className='admin-project-table'>
+//           <Card className='table-header'>
+//               <Typography className='id'>Project ID</Typography>
+//               <Typography className='title'>Title</Typography>
+//               <Typography className='created-at'>Created At</Typography>
+//               <Typography className='publish'>Publish</Typography>
+//               <Typography className='status'>Status</Typography>
+//               <Typography className='donators'>Donators</Typography>
+//               <Typography className='donations'>Donations</Typography>
+//               <Typography className='action'>Action</Typography>
+//               <Divider />
+//           </Card>
+//           {projects.map((data, idx) => {
+//               return (
+//                 <Box className='table-data'>
+//                       <Typography className='id'>{data.id}</Typography>
+//                 <Typography className='title'>{data.title}</Typography>
+//                 <Typography className='created-at'>{data.created}</Typography>
+//                       <Typography className='publish'>{ data.publish}</Typography>
+//                 <Typography className='status'>{data.status}</Typography>
+//                 <Typography className='donators'>{data.donators}</Typography>
+//                 <Typography className='donations'>{data.donations}</Typography>
+//                 <Button onClick={()=>{navigate(`/admin-project-details/${data.action}`)}} className='action'>View Details</Button>
+//                 <Divider />
+//        </Box>
+//               )
+//           })}
+//     </div>

@@ -1,0 +1,13 @@
+.footer-common-wrapper {
+    background-color: rgba(153, 156, 165,0.22);
+    height: 70px;
+    padding: 0;
+}
+.footer-common {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    > * {
+        color: #5e848c;
+    }
+}

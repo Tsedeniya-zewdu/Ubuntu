@@ -1,0 +1,118 @@
+.profile-wrapper {
+    .profile {
+        display: flex;
+        width: 100%;
+        gap: 50px;
+        min-width: 570px;
+        .title {
+            font-weight: 700;
+            padding-bottom: 20px;
+        }
+
+        .profile-picture {
+            width: 100%;
+            padding: 20px;
+            max-width: 570px;
+            display: flex;
+            align-items: center;
+            max-height: 230px;
+
+            .img-text-wrapper {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+
+
+
+                img {
+                    width: 96px;
+                    height: 96px;
+                    object-fit: cover;
+                    object-position: center;
+                    border-radius: 50%;
+                }
+            }
+
+            .texts {
+                display: flex;
+                gap: 20px;
+                justify-content: space-between;
+                align-items: center;
+                max-width: 250px;
+                margin-top: 52px;
+
+                button {
+                    text-transform: capitalize;
+                    text-decoration: underline;
+                    white-space: nowrap;
+                    font-size: 16px;
+                    color: var(--color-accent-3);
+                    height: 30px;
+                }
+            }
+        }
+
+        .basic-info {
+            width: 100%;
+            padding: 20px;
+            padding-bottom: 50px;
+            max-width: 570px;
+            .text-field-wrapper {
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
+    }
+    .btn-wrapper {
+        margin-top: 50px;
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+        button {
+            text-transform: capitalize;
+            font-size: 16px;
+            min-width: 84px;
+        }
+        .cancel {
+            background-color: gray;
+            &:hover {
+                background-color: gray;
+            }
+        }
+    }
+}
+
+
+.user-details, .fundraiser-details {
+    display: flex;
+    gap: 50px;
+    .profile {
+        flex-direction: column;
+
+    }
+    .name {
+        font-weight: 700;
+        font-size: 18px;
+        color: var(--color-accent-3);
+    }
+    .text-field-wrapper {
+        display: block !important; 
+        gap:0;
+    }
+    .text {
+        padding: 10px 0;
+        font-size: 16px;
+        color: var(--color-accent-2);
+        span:first-child {
+            font-weight: 700;
+            color: var(--color-accent-3);
+        }
+    }
+    .right-side {
+        min-width: 570px;
+        .activity-info {
+            padding: 20px;
+        }
+    }
+}
