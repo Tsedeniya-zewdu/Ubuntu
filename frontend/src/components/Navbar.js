@@ -18,6 +18,9 @@ import SearchIcon from '@mui/icons-material/Search'
 import { useContext, useState } from 'react'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { AuthContext } from '../context/AuthContext'
+import { useTranslation } from 'react-i18next'
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
+import LanguageIcon from '@mui/icons-material/Language';
 
 export default function Navbar(props) {
   const { currentUser, logout } = useContext(AuthContext)
@@ -31,7 +34,14 @@ export default function Navbar(props) {
     setAnchorEl1(null)
   }
 
+  const { t, i18n } = useTranslation()
+
+  function clickLanguage(lang) {
+    i18n.changeLanguage(lang)
+  }
+
   const [anchorEl2, setAnchorEl2] = useState(null)
+
   const open2 = Boolean(anchorEl2)
   const handleClick2 = (event) => {
     setAnchorEl2(event.currentTarget)
@@ -148,11 +158,72 @@ export default function Navbar(props) {
                 }}
               >
                 {/* search-login/register wrapper */}
-                <Box sx={{ display: 'flex', alignItems: 'center', "> button": {textTransform: 'capitalize', fontSize: '16px'} }}>
-
-                  <Button onClick={()=> navigate('/login')}>Login</Button>
-                  <Button onClick={()=> navigate('/register')}>Register</Button>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    '> button': {
+                      textTransform: 'capitalize',
+                      fontSize: '15px',
+                      fontWeight: '400',
+                    },
+                  }}
+                >
+                  <Button onClick={() => navigate('/login')}>
+                    {t('navlinks.10')}
+                  </Button>
+                  <Button
+                    sx={{
+                      mr: '20px',
+                      pr: '20px',
+                      borderRight: '1px solid #e6eaeb',
+                      borderRadius: '0px',
+                    }}
+                    onClick={() => navigate('/register')}
+                  >
+                    {t('navlinks.11')}
+                  </Button>
+                  {/* Language select */}
+                  <IconButton sx={{ fontWeight: '400' }} onClick={handleClick2}>
+                    <LanguageIcon className="language-icon" />
+                  </IconButton>
+                  <Box>
+                    <Menu
+                      id="basic-menu1"
+                      anchorEl={anchorEl2}
+                      open={open2}
+                      onClose={handleClose2}
+                      MenuListProps={{
+                        'aria-labelledby': 'basic-button1',
+                      }}
+                      sx={{
+                        zIndex: '999999',
+                        '>*': {
+                          fontWeight: '400',
+                          fontSize: '14px',
+                        },
+                        a: {
+                          textDecoration: 'none',
+                          color: 'black',
+                        },
+                        '.active': {
+                          borderBottom: '3px solid #029a5b',
+                          '>*': {
+                            color: '#029a5b',
+                          },
+                        },
+                      }}
+                    >
+                      <Box onClick={() => clickLanguage('en')}>
+                        <MenuItem onClick={handleClose2}>English</MenuItem>
+                      </Box>
+                      <Box onClick={() => clickLanguage('am')}>
+                        <MenuItem onClick={handleClose2}>አማርኛ</MenuItem>
+                      </Box>
+                    </Menu>
+                  </Box>
                 </Box>
+
                 {/* Login / Register Dropdown */}
                 <Menu
                   id="basic-menu1"
@@ -187,16 +258,16 @@ export default function Navbar(props) {
                   </Typography>
                   {currentUser && (
                     <NavLink to={props.dashboard}>
-                      <MenuItem onClick={handleClose1}>Dashboard</MenuItem>
+                      <MenuItem onClick={handleClose1}>{t('navlinks.12')}</MenuItem>
                     </NavLink>
                   )}
                   {currentUser ? (
                     <NavLink to={props.profile}>
-                      <MenuItem onClick={handleClose1}>My Account</MenuItem>
+                      <MenuItem onClick={handleClose1}>{t('navlinks.20')}</MenuItem>
                     </NavLink>
                   ) : (
                     <NavLink to="/login">
-                      <MenuItem onClick={handleClose1}>Login</MenuItem>
+                      <MenuItem onClick={handleClose1}>{t('navlinks.10')}</MenuItem>
                     </NavLink>
                   )}
                   {currentUser ? (
@@ -211,11 +282,11 @@ export default function Navbar(props) {
                           })
                       }}
                     >
-                      <MenuItem onClick={handleClose1}>Logout</MenuItem>
+                      <MenuItem onClick={handleClose1}>{t('navlinks.21')}</MenuItem>
                     </NavLink>
                   ) : (
                     <NavLink to="/register">
-                      <MenuItem onClick={handleClose1}>Register</MenuItem>
+                      <MenuItem onClick={handleClose1}>{t('navlinks.11')}</MenuItem>
                     </NavLink>
                   )}
                 </Menu>

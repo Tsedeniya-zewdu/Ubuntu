@@ -1,9 +1,13 @@
 import { Button, Card, Typography } from '@mui/material'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 
 export const UserNotificationCard = (props) => {
   const navigate = useNavigate()
+
+  const {t} = useTranslation()
+
   return (
     <Card className={props.new? "user-notification-card new" : "user-notification-card"}>
       <div className="img-wrapper">
@@ -12,17 +16,17 @@ export const UserNotificationCard = (props) => {
       <div className="texts-wrapper">
         <div>
           <Typography>
-            <span className="bold">{props.name} </span> posted new project:{' '}
+            <span className="bold">{props.name} </span> {t('user:notification.1')}{' '}
             <span className="light">{props.title}</span>
           </Typography>
           <Typography>
-            <span className="bold">Raised Amount: </span>
+            <span className="bold">{t('user:notification.2')}</span>
             <span className="light">
-              {props.raised} ETB ({props.percent}%)
+              {props.raised} {t('user:notification.3')} ({props.percent}%)
             </span>{' '}
-            | <span className="bold">Goal: </span>
-            <span className="light">{props.goal} ETB</span> |{' '}
-            <span className="bold">Days Left: </span>
+            | <span className="bold">{t('user:notification.4')}</span>
+            <span className="light">{props.goal} {t('user:notification.3')}</span> |{' '}
+            <span className="bold">{t('user:notification.5')}</span>
             <span className="light">{props.days}</span>
           </Typography>
 
@@ -35,7 +39,7 @@ export const UserNotificationCard = (props) => {
             navigate(`/projects/${props.id}`)
           }}
         >
-          View Details
+          {t('btn.4')}
         </Button>
       </div>
     </Card>

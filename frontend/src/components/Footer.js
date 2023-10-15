@@ -4,80 +4,82 @@ import logo from '../assets/logo2.png'
 import { Link } from 'react-router-dom'
 import btn from '../assets/right-arrow-btn.png'
 import CopyrightIcon from '@mui/icons-material/Copyright'
+import { useTranslation } from 'react-i18next';
 
-const projects = [
-  {
-    title: 'Medical',
-    path: '/project/Medical',
-  },
-  {
-    title: 'Disaster',
-    path: '/project/Disaster',
-  },
-  {
-    title: 'Family',
-    path: '/project/Family',
-  },
-  {
-    title: 'Children',
-    path: '/project/Children',
-  },
-  {
-    title: 'Education',
-    path: '/project/Education',
-  },
-  {
-    title: 'Wildlife',
-    path: '/project/Wildlife',
-  },
-]
-
-const links = [
-  {
-    title: 'About',
-    path: '/about',
-  },
-  {
-    title: 'Projects',
-    path: '/project/All',
-  },
-  {
-    title: 'News',
-    path: '/news',
-  },
-  {
-    title: 'Contact',
-    path: '/contact',
-  },
-  {
-    title: 'FAQ',
-    path: '',
-  },
-  {
-    title: 'Terms',
-    path: '/terms',
-  },
-]
-
-const contact = [
-  {
-    title: 'Phone Number',
-    icon: '/images/phone-icon.png',
-    data: '(+251)-123-456-789',
-  },
-  {
-    title: 'Email Adress',
-    icon: '/images/email-icon.png',
-    data: 'info@ubuntu.com',
-  },
-  {
-    title: 'Locations',
-    icon: '/images/location-icon.png',
-    data: 'Addis Ababa, Ethiopia',
-  },
-]
 
 export const Footer = () => {
+  const {t} = useTranslation()
+  const projects = [
+    {
+      title: t('category.1.title'),
+      path: '/project/Medical',
+    },
+    {
+      title: t('category.2.title'),
+      path: '/project/Disaster',
+    },
+    {
+      title: t('category.3.title'),
+      path: '/project/Family',
+    },
+    {
+      title: t('category.4.title'),
+      path: '/project/Children',
+    },
+    {
+      title: t('category.5.title'),
+      path: '/project/Education',
+    },
+    {
+      title: t('category.6.title'),
+      path: '/project/Other',
+    },
+  ]
+  
+  const links = [
+    {
+      title: t('navlinks.2'),
+      path: '/about',
+    },
+    {
+      title: t('navlinks.3'),
+      path: '/project/All',
+    },
+    {
+      title: t('navlinks.4'),
+      path: '/news',
+    },
+    {
+      title: t('navlinks.5'),
+      path: '/contact',
+    },
+    {
+      title: t('navlinks.22'),
+      path: '',
+    },
+    {
+      title: t('navlinks.23'),
+      path: '/terms',
+    },
+  ]
+  
+  const contact = [
+    {
+      title: t('footer.phone'),
+      icon: '/images/phone-icon.png',
+      data: '(+251)-123-456-789',
+    },
+    {
+      title: t('footer.email'),
+      icon: '/images/email-icon.png',
+      data: 'info@ubuntu.com',
+    },
+    {
+      title: t('footer.location'),
+      icon: '/images/location-icon.png',
+      data: t('footer.location2'),
+    },
+  ]
   return (
     <Box
       sx={{
@@ -153,7 +155,7 @@ export const Footer = () => {
                 maxWidth: '350px'
               }}
             >
-              We are dedicated to connecting individuals in need with generous donors. Our platform empowers users to make a difference by supporting meaningful causes, while providing fundraisers with the tools to create impactful campaigns.
+             {t('footer.about')}
             </Typography>
 
             {/* Join Newsletters */}
@@ -234,7 +236,7 @@ export const Footer = () => {
                 color: 'white',
               }}
             >
-              Projects
+             {t('navlinks.3')}
             </Typography>
             <Box
               sx={{
@@ -278,7 +280,7 @@ export const Footer = () => {
                 color: 'white',
               }}
             >
-              Links
+              {t('footer.links')}
             </Typography>
             <Box
               sx={{
@@ -322,7 +324,7 @@ export const Footer = () => {
                 color: 'white',
               }}
             >
-              Contact
+              {t('navlinks.5')}
             </Typography>
             <Box
               sx={{
@@ -401,7 +403,7 @@ export const Footer = () => {
         >
           <CopyrightIcon />
           <Typography variant="body2">
-            2023 Ubuntu. All right reserved{' '}
+            {t('footer.copyright')}
           </Typography>
         </Box>
       </Box>

@@ -16,6 +16,7 @@ import {
   RadioGroup,
 } from '@mui/material'
 import { AuthContext } from './../context/AuthContext'
+import { useTranslation } from 'react-i18next'
 
 export const AdminLogin = () => {
   // For holding inputs data
@@ -65,6 +66,8 @@ export const AdminLogin = () => {
     }
   }, [currentUser])
 
+  const {t} = useTranslation()
+
   return (
     <div>
       <Container component="main" maxWidth="xs">
@@ -86,7 +89,7 @@ export const AdminLogin = () => {
             <img src="/images/logo.png" alt="logo" />
           </Button>
           <Typography component="h1" variant="h5">
-          Admin Account Login
+          {t('login.11')}
           </Typography>
           <Box component="form" sx={{ mt: 1 }}>
 
@@ -95,7 +98,7 @@ export const AdminLogin = () => {
               required
               fullWidth
               id="email"
-              label="Email Address"
+              label={t('login.4')}
               name="email"
               autoComplete="email"
               autoFocus
@@ -106,7 +109,7 @@ export const AdminLogin = () => {
               required
               fullWidth
               name="password"
-              label="Password"
+              label={t('login.5')}
               type="password"
               id="password"
               autoComplete="current-password"
@@ -119,7 +122,7 @@ export const AdminLogin = () => {
               sx={{ mt: 3, mb: 2 }}
               onClick={handleSubmit}
             >
-              Sign In
+              {t('login.6')}
             </Button>
             <Grid container>
               {showErr && (
@@ -136,9 +139,9 @@ export const AdminLogin = () => {
           align="center"
           sx={{ mt: 5, '>*': { color: 'inherit' } }}
         >
-          {'Copyright © '}
+          { t('login.10')}{' © '}
 
-          <NavLink to="/">Ubuntu </NavLink>
+          <NavLink to="/">{t('login.9')} </NavLink>
           {new Date().getFullYear()}
           {'.'}
         </Typography>

@@ -9,6 +9,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { Alert } from '@mui/material'
 import { AuthContext } from './../context/AuthContext'
 import axios from 'axios'
+import { t } from 'i18next'
 
 export const PasswordReset = () => {
   // For holding inputs data
@@ -48,7 +49,7 @@ export const PasswordReset = () => {
         console.log(err)
       }
     } else {
-      setShowErr("Passwords did not matched!")
+      setShowErr(t('reset.1'))
     }
     // login(inputs)
     //   .then((res) => {
@@ -84,7 +85,7 @@ export const PasswordReset = () => {
             <img src="/images/logo.png" alt="logo" />
           </Box>
           <Typography component="h1" variant="h6" sx={{fontWeight: '400', py: '20px'}}>
-            Please enter new password!
+            {t('reset.2')}
           </Typography>
           <Box component="form" sx={{ mt: 1 }}>
             <TextField
@@ -93,7 +94,7 @@ export const PasswordReset = () => {
               fullWidth
               id="password1"
               type="password"
-              label="New Password"
+              label={t('reset.3')}
               name="password1"
               autoFocus
               onChange={handleChange}
@@ -103,7 +104,7 @@ export const PasswordReset = () => {
               required
               fullWidth
               name="password2"
-              label="Confirm Password"
+              label={t('reset.4')}
               type="password"
               id="password"
               autoComplete="current-password"
@@ -116,7 +117,7 @@ export const PasswordReset = () => {
               sx={{ mt: 3, mb: 2 }}
               onClick={handleSubmit}
             >
-              Change Password
+              {t('reset.5')}
             </Button>
             <Grid container>
               {showErr && (

@@ -3,10 +3,12 @@ import { Banner } from '../components/Banner'
 import { ProjectComp } from '../components/ProjectComp'
 import axios from 'axios'
 import { useParams } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 
 export const Project = () => {
   const {cid} = useParams()
   const [projects, setProjects] = useState([])
+  const {t} = useTranslation()
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -21,7 +23,7 @@ export const Project = () => {
   },[])
   return (
     <div>
-      <Banner title="Projects" img="/images/project-banner.jpg"/>
+      <Banner title={t('banner.5')} img="/images/project-banner.jpg"/>
       <ProjectComp
       projects = {projects}
       />

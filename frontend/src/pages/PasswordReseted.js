@@ -4,11 +4,14 @@ import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { Button } from '@mui/material'
+import { useTranslation } from 'react-i18next'
 
 export const PasswordReseted = () => {
 
   // For redirecting
   const navigate = useNavigate()
+
+  const {t} = useTranslation()
 
   return (
     <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
@@ -31,7 +34,7 @@ export const PasswordReseted = () => {
             <img src="/images/logo.png" alt="logo" />
           </Button>
           <Typography sx={{py: '15px', color: '#029a5b', textAlign: 'center'}} component="h1" variant="h5">
-           Password reset successful!
+           {t('reset.9')}
           </Typography>
           {/* <Typography variant="h6" sx={{ textAlign: 'center', fontWeight: '400'}}>
            Please goto click on the button below to login into your account!
@@ -45,23 +48,10 @@ export const PasswordReseted = () => {
               sx={{ mt: 3, mb: 2, minWidth: '140px' }}
               onClick={()=> navigate('/login')}
             >
-              Login
+              {t('reset.10')}
             </Button>
           </Box>
         </Box>
-
-        <Typography
-          variant="body2"
-          color="text.secondary"
-          align="center"
-          sx={{ mt: 5, '>*': { color: 'inherit' } }}
-        >
-          {'Copyright © '}
-
-          <NavLink to="/">Ubuntu </NavLink>
-          {new Date().getFullYear()}
-          {'.'}
-        </Typography>
       </Container>
     </Box>
   )

@@ -4,112 +4,116 @@ import { AuthContext } from './context/AuthContext'
 import Navbar from './components/Navbar'
 import { Footer } from './components/Footer'
 import { NavbarCommon } from './components/common/Navbar/NavbarCommon'
+import { useTranslation } from 'react-i18next'
+
+
+
+export const PublicRoutes = () => {
+  const {t} = useTranslation()
 
 const pages = [
   {
-    title: 'Home',
+    title: t('navlinks.1'),
     path: '/',
   },
   {
-    title: 'About',
+    title: t('navlinks.2'),
     path: '/about',
   },
   {
-    title: 'Projects',
+    title: t('navlinks.3'),
     path: '/project/All',
   },
   {
-    title: 'News',
+    title: t('navlinks.4'),
     path: '/news',
   },
   {
-    title: 'Contact',
+    title: t('navlinks.5'),
     path: '/contact',
   },
 ]
 
 const pages1 = [
   {
-    title: 'Home',
+    title: t('navlinks.1'),
     path: '/',
   },
   {
-    title: 'Dashboard',
+    title: t('navlinks.12'),
     path: '/fundraiser',
   },
   {
-    title: 'About',
+    title: t('navlinks.2'),
     path: '/about',
   },
   {
-    title: 'Projects',
+    title: t('navlinks.3'),
     path: '/project/All',
   },
   {
-    title: 'News',
+    title: t('navlinks.4'),
     path: '/news',
   },
   {
-    title: 'My Projects',
+    title: t('navlinks.13'),
     path: '/fundraiser-projects',
   },
   {
-    title: 'My Donations',
+    title: t('navlinks.14'),
     path: '/fundraiser-donations',
   },
 ]
 
 const pages2 = [
   {
-    title: 'Home',
+    title: t('navlinks.1'),
     path: '/',
   },
   {
-    title: 'Dashboard',
+    title: t('navlinks.12'),
     path: '/user',
   },
   {
-    title: 'About',
+    title: t('navlinks.2'),
     path: '/about',
   },
   {
-    title: 'Projects',
+    title: t('navlinks.3'),
     path: '/project/All',
   },
   {
-    title: 'News',
+    title: t('navlinks.4'),
     path: '/news',
   },
   {
-    title: 'My Donations',
+    title: t('navlinks.14'),
     path: '/user-donations',
   },
 ]
 
 const pages3 = [
   {
-    title: 'Dashboard',
+    title: t('navlinks.12'),
     path: '/admin',
   },
   {
-    title: 'Projects',
+    title: t('navlinks.3'),
     path: '/admin-projects',
   },
   {
-    title: 'Donations',
+    title: t('navlinks.15'),
     path: '/admin-donations',
   },
   {
-    title: 'Fundraisers',
+    title: t('navlinks.16'),
     path: '/admin-fundraisers',
   },
   {
-    title: 'Users',
+    title: t('navlinks.17'),
     path: '/admin-users',
   },
 ]
-
-export const PublicRoutes = () => {
   const { currentUser } = useContext(AuthContext)
   let loggedIn = false
   let dashboard

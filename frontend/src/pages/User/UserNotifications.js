@@ -5,56 +5,14 @@ import { useNavigate } from 'react-router-dom'
 import { UserNotificationCard } from '../../components/common/Card/UserNotificationCard'
 import axios from "axios"
 import { AuthContext } from '../../context/AuthContext'
+import { useTranslation } from 'react-i18next'
 
-// const cardData = [
-//   {
-//     id: '64d34fb8c89df6cb8e308036',
-//     img: '/images/avator.png',
-//     name: 'Yohannes Alemu',
-//     goal: 900000,
-//     title: 'Funds for Empowering Minds, Building Futures',
-//     raised: 5000,
-//     percent: 15,
-//     time: '10 min ago',
-//     days: 345,
-//     },
-//     {
-//         id: '64d34fb8c89df6cb8e308036',
-//         img: '/images/avator.png',
-//         name: 'Yohannes Alemu',
-//         goal: 900000,
-//         title: 'Funds for Empowering Minds, Building Futures',
-//         raised: 5000,
-//         percent: 15,
-//         time: '10 min ago',
-//         days: 345,
-//     },
-//     {
-//         id: '64d34fb8c89df6cb8e308036',
-//         img: '/images/avator.png',
-//         name: 'Yohannes Alemu',
-//         goal: 900000,
-//         title: 'Funds for Empowering Minds, Building Futures',
-//         raised: 5000,
-//         percent: 15,
-//         time: '10 min ago',
-//         days: 345,
-//     },
-//     {
-//         id: '64d34fb8c89df6cb8e308036',
-//         img: '/images/avator.png',
-//         name: 'Yohannes Alemu',
-//         goal: 900000,
-//         title: 'Funds for Empowering Minds, Building Futures',
-//         raised: 5000,
-//         percent: 15,
-//         time: '10 min ago',
-//         days: 345,
-//       },
-// ]
 
 export const UserNotifications = () => {
   const navigate = useNavigate()
+
+  const {t} = useTranslation()
+
   const { currentUser, getUserNotifications } = useContext(AuthContext)
   const [projects, setProjects] = useState([])
   const [projectsHistory, setProjectHistory] = useState([])
@@ -79,7 +37,7 @@ export const UserNotifications = () => {
           sx={{ display: 'flex', flexDirection: 'column-reverse', gap: '20px' }}
         >
           <Typography variant="h5" sx={{ fontWeight: '700', pb: '50px' }}>
-            Latest Notifications
+           {t('title.1')}
           </Typography>
           <Button
             onClick={() => navigate('/user')}
@@ -93,7 +51,7 @@ export const UserNotifications = () => {
             }}
             startIcon={<ArrowBackIcon />}
           >
-            Back
+            {t('btn.1')}
           </Button>
         </Box>
         {/* New projects notifications */}

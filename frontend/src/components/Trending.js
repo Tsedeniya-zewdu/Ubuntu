@@ -6,9 +6,13 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import { Pagination } from 'swiper/modules'
 import 'swiper/css'
 import axios from 'axios'
+import { useTranslation } from 'react-i18next'
 
 export const Trending = () => {
   const [projects, setProjects] = useState([])
+
+  const { t } = useTranslation()
+  
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -45,7 +49,7 @@ export const Trending = () => {
               },
             }}
           >
-            <StyledTitle1 gutterBottom>trending fundraisers </StyledTitle1>
+            <StyledTitle1 gutterBottom>{t('home:project.1')} </StyledTitle1>
             <StyledTitle2
               gutterBottom
               variant="h2"
@@ -53,7 +57,7 @@ export const Trending = () => {
                 fontSize: { xs: '28px', sm: '32px', md: '38px', lg: '42px' },
               }}
             >
-              Explore Fundraisers
+              {t('home:project.2')}
             </StyledTitle2>
           </Box>
           <Box

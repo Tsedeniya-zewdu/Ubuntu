@@ -1,0 +1,237 @@
+{
+  "navlinks": {
+    "0": "Language",
+    "1": "Home",
+    "2": "About",
+    "3": "Projects",
+    "4": "News",
+    "5": "Contact",
+    "6": "English",
+    "7": "Amharic",
+    "8": "Oromiffa",
+    "9": "Tigrinya",
+    "10": "Login",
+    "11": "Register",
+    "12": "Dashboard",
+    "13": "My Projects",
+    "14": "My Donations",
+    "15": "Donations",
+    "16": "Fundraisers",
+    "17": "Users",
+    "18": "Approved Projects",
+    "19": "Donations",
+    "20": "My Profile",
+    "21": "Logout",
+    "22": "FAQ",
+    "23": "Terms",
+    "24": "Reports"
+  },
+  "category": {
+    "1": {
+      "title": "Medical",
+      "desc": "Provide For Medical & Health"
+    },
+    "2": {
+      "title": "Disaster",
+      "desc": "For Impacted By Disaster"
+    },
+    "3": {
+      "title": "Family",
+      "desc": "Provide For Families"
+    },
+    "4": {
+      "title": "Children",
+      "desc": "Provide For Children"
+    },
+    "5": {
+      "title": "Education",
+      "desc": "For Education & Schools"
+    },
+    "6": {
+      "title": "Others",
+      "desc": "Provide For different causes"
+    },
+    "title1": "POPULar Categories",
+    "title2": "Browse by Categories"
+  },
+  "footer": {
+    "about": "We are dedicated to connecting individuals in need with generous donors. Our platform empowers users to make a difference by supporting meaningful causes, while providing fundraisers with the tools to create impactful campaigns.",
+    "phone": "Phone Number",
+    "email": "Email Address",
+    "location": "Location",
+    "location2": "Addis Ababa, Ethiopia",
+    "links": "Links",
+    "copyright": " 2023 Ubuntu. All right reserved"
+  },
+  "banner": {
+    "1": "About Us",
+    "2": "Contact Us",
+    "3": "Our News",
+    "4": "News Details",
+    "5": "Projects",
+    "6": "Our Terms"
+  },
+  "login": {
+    "1": "Sign in",
+    "2": "User",
+    "3": "Fundraiser",
+    "4": "Email address",
+    "5": "Password",
+    "6": "Sign in",
+    "7": "Forgot password?",
+    "8": "Don't have an account? Sign Up",
+    "9": "Ubuntu",
+    "10": "Copyright",
+    "11": "Admin Account Login"
+  },
+  "register": {
+    "1": "Sign up",
+    "2": "User",
+    "3": "Fundraiser",
+    "4": "Full Name",
+    "5": "Email Address",
+    "6": "Password",
+    "7": "Sign Up",
+    "8": "Already have an account? Sign in",
+    "9": "Ubuntu",
+    "10": "Copyright",
+    "11": "Admin Account Registration",
+    "12": "Normal",
+    "13": "Super"
+  },
+  "verify": {
+    "1": "Email verification link sent!",
+    "2": "Please goto your email and click on the link to verify your account!",
+    "3": "Back to Home",
+    "4": "Ubuntu",
+    "5": "Copyright",
+    "6": "Your Email is verified successfully!",
+    "7": "Login"
+  },
+  "reset": {
+    "1": "Passwords did not matched!",
+    "2": "Please enter new password!",
+    "3": "New Password",
+    "4": "Confirm Password",
+    "5": "Change Password",
+    "6": "Password reset link sent!",
+    "7": "Please goto your email and click on the link to reset your password!",
+    "8": "Back to Home",
+    "9": "Password reset successful!",
+    "10": "Login"
+  },
+  "forgot": {
+    "1": "Please Select your account type and enter your email, password reset link will be sent to you!",
+    "2": "User",
+    "3": "Fundraiser",
+    "4": "Email address",
+    "5": "Get Password Reset Link"
+  },
+  "thankyou": {
+    "1": "Donation Successful",
+    "2": "Thank You for your Support!",
+    "3": "Back to Home",
+    "4": "Donation Failed!",
+    "5": "Please try again!"
+  },
+  "dashboard": {
+    "1": {
+      "1": "Welcome back!",
+      "2": "Ubuntu Dashboard",
+      "3": "User",
+      "4": "Fundraiser",
+      "5": "Admin",
+      "6": "View Profile"
+    },
+    "2": {
+      "1": "Messages",
+      "2": "List of all my messages",
+      "3": "Latest messages",
+      "4": "View Messages"
+    },
+    "3": {
+      "1": "Notifications",
+      "2": "List of all notifications",
+      "3": "Latest notifications",
+      "4": "View Notifications"
+    },
+    "4": {
+      "1": "My Donations",
+      "2": "Donation Transactions",
+      "3": "Total donations",
+      "4": "View Donations"
+    },
+    "5": {
+      "1": "My Projects",
+      "2": "List of all my projects",
+      "3": "Total projects",
+      "4": "View Projects"
+    },
+    "6": {
+      "1": "Projects",
+      "2": "List of all projects",
+      "3": "Approved projects",
+      "4": "View Projects"
+    },
+    "7": {
+      "1": "Fundraisers",
+      "2": "Latest Fundraisers",
+      "3": "All Fundraisers",
+      "4": "View Fundraisers"
+    },
+    "8": {
+      "1": "Users",
+      "2": "Latest Users",
+      "3": "All Users",
+      "4": "View Users"
+    },
+    "9": {
+      "1": "Donations",
+      "2": "Donation Transactions",
+      "3": "Total donations",
+      "4": "View Donations"
+    },
+    "title": {
+      "1": "User Dashboard",
+      "2": "Fundraiser Dashboard",
+      "3": "Admin Dashboard"
+    }
+  },
+  "title": {
+    "1": " Latest Notifications",
+    "2": "My Donations History",
+    "3": "My Account",
+    "4": " Messages",
+    "5": "Donations History",
+    "6": "My Projects",
+    "7": "Project Details",
+    "8": "Create Project",
+    "9": "Update Project",
+    "10": "News",
+    "11": "Update News"
+  },
+  "btn": {
+    "1": "Back",
+    "2": "Update",
+    "3": "Cancel",
+    "4": "View Details",
+    "5": "New Project",
+    "6": "Edit",
+    "7": "Save"
+  },
+  "time": {
+    "1": "yr",
+    "2": "m",
+    "3": "d",
+    "4": "h",
+    "5": "min",
+    "6": "ago",
+    "7": "Anonymous",
+    "8": "Donated",
+    "9": "ETB"
+  },
+  "news": {
+    "1": "News title",
+    "2": ""
+  }
+}

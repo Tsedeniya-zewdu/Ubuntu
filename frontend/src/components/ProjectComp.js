@@ -19,6 +19,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom'
 import SearchIcon from '@mui/icons-material/Search'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import axios from 'axios'
+import { useTranslation } from 'react-i18next'
 
 export const ProjectComp = (props) => {
   const { cid } = useParams()
@@ -35,6 +36,8 @@ export const ProjectComp = (props) => {
   const [category, setCategory] = useState('All')
   const [counter, setCounter] = useState(0)
   const [pageCounter, setPageCounter] = useState(1)
+
+  const {t} = useTranslation()
 
   const handleChange = (event) => {
     setCategory(event.target.value)
@@ -122,14 +125,14 @@ export const ProjectComp = (props) => {
                 disableUnderline={true}
               >
                 <MenuItem value="All" selected>
-                  All Category
+                {t('project:category.1')}
                 </MenuItem>
-                <MenuItem value="Medical">Medical</MenuItem>
-                <MenuItem value="Children">Children</MenuItem>
-                <MenuItem value="Education">Education</MenuItem>
-                <MenuItem value="Family">Family</MenuItem>
-                <MenuItem value="Disaster">Disaster</MenuItem>
-                <MenuItem value="Wildlife">Wildlife</MenuItem>
+                <MenuItem value="Medical">{t('project:category.2')}</MenuItem>
+                <MenuItem value="Children">{t('project:category.3')}</MenuItem>
+                <MenuItem value="Education">{t('project:category.4')}</MenuItem>
+                <MenuItem value="Family">{t('project:category.5')}</MenuItem>
+                <MenuItem value="Disaster">{t('project:category.6')}</MenuItem>
+                <MenuItem value="Other">{t('project:category.7')}</MenuItem>
               </Select>
             </FormControl>
           </Box>
@@ -156,8 +159,8 @@ export const ProjectComp = (props) => {
                 pl: { md: '20px' },
                 color: 'black',
               }}
-              placeholder="Find Project"
-              inputProps={{ 'aria-label': 'Find project' }}
+              placeholder={t('project:category.9')}
+              inputProps={{ 'aria-label': t('project:category.9') }}
             />
             <IconButton>
               <SearchIcon
@@ -184,7 +187,7 @@ export const ProjectComp = (props) => {
         >
           {/* Total Projects */}
           <Typography>
-            <span>{counter}</span> Projects found
+            <span>{counter}</span> {t('project:category.8')}
           </Typography>
           <Box sx={{ width: { xs: '100%', sm: 'auto' } }}>
             {/* Sort */}

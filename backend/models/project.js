@@ -46,14 +46,84 @@ const projectSchema = new Schema({
     status: {
         type: String,
     },
-    approval: {
+    projectApproval1: {
         type: String
     },
-    approved: {
+    projectApproval2: {
+        type: String,
+    },
+    newsApproval1: {
+        type: String,
+    },
+    newsApproval2: {
+        type: String,
+    },
+    projectApprovedAt: {
         type: Date
+    },
+    projectRejectedAt: {
+        type: Date
+    },
+    newsApprovedAt: {
+        type: Date
+    },
+    projectApprovedBy1: {
+        type: String,
+    },
+    projectApprovedBy2: {
+        type: String,
+    },
+    newsApprovedBy1: {
+        type: String,
+    },
+    newsApprovedBy2: {
+        type: String,
     },
     request: {
         type: String
+    },
+    adminRequestType: {
+        type: String,
+    },
+    fundraiserRequestedAt: {
+        type: Date,
+    },
+    adminRequestedAt: {
+        type: Date,
+    },
+    projectCompletedAt: {
+        type: Date,
+    },
+    news: {
+        type: String,
+    },
+    newsdesc: {
+        type: String,
+    },
+    newsdetail: {
+        type: String,
+    },
+    released: {
+        type: Date,
+    },
+    cost1: {
+        type: Number,
+    },
+    cost2: {
+        type: Number,
+    },
+    given: {
+        type: Number,
+    },
+    newsimages: {
+        type: Array,
+    },
+    newsvideo: {
+        type: String,
+
+    },
+    donations: {
+        type: Array,
     }
 }, {timestamps: true})
 

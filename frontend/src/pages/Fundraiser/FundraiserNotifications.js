@@ -5,9 +5,11 @@ import { useNavigate } from 'react-router-dom'
 import { FundraiserNotificationCard } from '../../components/common/Card/FundraiserNotificationCard'
 import { AuthContext } from '../../context/AuthContext'
 import axios from 'axios'
+import { useTranslation } from 'react-i18next'
 
 export const FundraiserNotifications = () => {
   const navigate = useNavigate()
+  const {t} = useTranslation()
 
   const { currentUser, getFundraiserNotifications } = useContext(AuthContext)
   const [donations, setDonations] = useState([])
@@ -39,7 +41,7 @@ export const FundraiserNotifications = () => {
           sx={{ display: 'flex', flexDirection: 'column-reverse', gap: '20px' }}
         >
           <Typography variant="h5" sx={{ fontWeight: '700', pb: '50px' }}>
-            Latest Notifications
+            {t('title.1')}
           </Typography>
           <Button
             onClick={() => navigate('/fundraiser')}
@@ -53,7 +55,7 @@ export const FundraiserNotifications = () => {
             }}
             startIcon={<ArrowBackIcon />}
           >
-            Back
+            {t('btn.1')}
           </Button>
         </Box>
         {/* new donations notifications */}
@@ -67,34 +69,34 @@ export const FundraiserNotifications = () => {
               let day = dateNow.getUTCDate() - dateObj.getUTCDate()
               let hour = dateNow.getUTCHours() - dateObj.getUTCHours()
               let min = dateNow.getUTCMinutes() - dateObj.getUTCMinutes()
-              year = year != 0 ? `${year}yr` : ''
-              month = month != 0 && month > 0 ? `${month}m` : ''
-              day = day != 0 && day > 0 ? `${day}d` : ''
-              hour = hour != 0 && hour > 0 ? `${hour}h` : ''
-              min = min != 0 && min > 0 ? `${min}min` : `0m`
+              year = year != 0 ? `${year}${t('time.1')}` : ''
+              month = month != 0 && month > 0 ? `${month}${t('time.2')}` : ''
+              day = day != 0 && day > 0 ? `${day}${t('time.3')}` : ''
+              hour = hour != 0 && hour > 0 ? `${hour}${t('time.4')}` : ''
+              min = min != 0 && min > 0 ? `${min}${t('time.5')}` : `0${t('time.5')}`
               let timeAndDate
               if (year != '') {
-                timeAndDate = `${year} ago`
+                timeAndDate = `${year} ${t('time.6')}`
               } else if (month != '') {
-                timeAndDate = `${month} ago`
+                timeAndDate = `${month} ${t('time.6')}`
               } else if (day != '') {
-                timeAndDate = `${day} ago`
+                timeAndDate = `${day} ${t('time.6')}`
               } else if (hour != '') {
-                timeAndDate = `${hour} ago`
+                timeAndDate = `${hour} ${t('time.6')}`
               } else {
-                timeAndDate = `${min} ago`
+                timeAndDate = `${min} ${t('time.6')}`
               }
               return (
                 <FundraiserNotificationCard
                   key={idx}
                   id={data.projectId}
-                  img={data.anonymous ? 'profile-icon.png' : (data.user[0] ? data.user[0].image: 'profile-icon.png')}
-                  name={data.anonymous ? 'Anonymous' : data.donator}
+                  img={data.anonymous ? 'profile-icon.png' : (data.user[0] ? data.user[0].image : 'profile-icon.png')}
+                  name={data.anonymous ? t('time.7') : data.donator}
                   donated={data.amount}
-                  title={data.project[0].title}
-                  raised={data.project[0].raised}
+                  title={data.project[0] ? data.project[0].title : ''}
+                  raised={data.project[0] ? data.project[0].raised : ''}
                   time={timeAndDate}
-                  goal={data.project[0].amount}
+                  goal={data.project[0] ? data.project[0].amount : ''}
                   new={false}
                 />
               )
@@ -112,34 +114,34 @@ export const FundraiserNotifications = () => {
               let day = dateNow.getUTCDate() - dateObj.getUTCDate()
               let hour = dateNow.getUTCHours() - dateObj.getUTCHours()
               let min = dateNow.getUTCMinutes() - dateObj.getUTCMinutes()
-              year = year != 0 ? `${year}yr` : ''
-              month = month != 0 && month > 0 ? `${month}m` : ''
-              day = day != 0 && day > 0 ? `${day}d` : ''
-              hour = hour != 0 && hour > 0 ? `${hour}h` : ''
-              min = min != 0 && min > 0 ? `${min}min` : `0m`
+              year = year != 0 ? `${year}${t('time.1')}` : ''
+              month = month != 0 && month > 0 ? `${month}${t('time.2')}` : ''
+              day = day != 0 && day > 0 ? `${day}${t('time.3')}` : ''
+              hour = hour != 0 && hour > 0 ? `${hour}${t('time.4')}` : ''
+              min = min != 0 && min > 0 ? `${min}${t('time.5')}` : `0${t('time.5')}`
               let timeAndDate
               if (year != '') {
-                timeAndDate = `${year} ago`
+                timeAndDate = `${year} ${t('time.6')}`
               } else if (month != '') {
-                timeAndDate = `${month} ago`
+                timeAndDate = `${month} ${t('time.6')}`
               } else if (day != '') {
-                timeAndDate = `${day} ago`
+                timeAndDate = `${day} ${t('time.6')}`
               } else if (hour != '') {
-                timeAndDate = `${hour} ago`
+                timeAndDate = `${hour} ${t('time.6')}`
               } else {
-                timeAndDate = `${min} ago`
+                timeAndDate = `${min} ${t('time.6')}`
               }
               return (
                 <FundraiserNotificationCard
                   key={idx}
                   id={data.projectId}
                   img={data.anonymous ? 'profile-icon.png' : (data.user[0] ? data.user[0].image: 'profile-icon.png')}
-                  name={data.anonymous ? 'Anonymous' : data.donator}
+                  name={data.anonymous ? t('time.7') : data.donator}
                   donated={data.amount}
-                  title={data.project[0].title}
-                  raised={data.project[0].raised}
+                  title={data.project[0] ? data.project[0].title : ''}
+                  raised={data.project[0] ? data.project[0].raised : ''}
                   time={timeAndDate}
-                  goal={data.project[0].amount}
+                  goal={data.project[0] ? data.project[0].amount : ''}
                 />
               )
             })}

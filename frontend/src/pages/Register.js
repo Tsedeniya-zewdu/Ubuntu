@@ -15,6 +15,7 @@ import {
   RadioGroup,
 } from '@mui/material'
 import { AuthContext } from './../context/AuthContext'
+import { useTranslation } from 'react-i18next'
 
 export const Register = () => {
   // For holding inputs data
@@ -70,6 +71,8 @@ export const Register = () => {
     }
   }, [currentUser])
 
+  const {t} = useTranslation()
+
   return (
     <div>
       <Container component="main" maxWidth="xs">
@@ -91,7 +94,7 @@ export const Register = () => {
             <img src="/images/logo.png" alt="logo" />
           </Button>
           <Typography component="h1" variant="h5">
-            Sign up
+            {t('register.1')}
           </Typography>
           <Box component="form" noValidate sx={{ mt: 3 }}>
             <FormControl>
@@ -108,14 +111,14 @@ export const Register = () => {
                     <FormControlLabel
                       value="User"
                       control={<Radio />}
-                      label="User"
+                      label={t('register.2')}
                     />{' '}
                   </Box>
                   <Box className="account-type-box">
                     <FormControlLabel
                       value="Fundraiser"
                       control={<Radio />}
-                      label="Fundraiser"
+                      label={t('register.3')}
                     />
                   </Box>{' '}
                 </Box>
@@ -127,7 +130,7 @@ export const Register = () => {
                   required
                   fullWidth
                   id="name"
-                  label="Full Name"
+                  label={t('register.4')}
                   name="name"
                   onChange={handleChange}
                 />
@@ -137,7 +140,7 @@ export const Register = () => {
                   required
                   fullWidth
                   id="email"
-                  label="Email Address"
+                  label={t('register.5')}
                   type="email"
                   name="email"
                   autoComplete="email"
@@ -149,7 +152,7 @@ export const Register = () => {
                   required
                   fullWidth
                   name="password"
-                  label="Password"
+                  label={t('register.6')}
                   type="password"
                   id="password"
                   autoComplete="new-password"
@@ -164,13 +167,13 @@ export const Register = () => {
               sx={{ mt: 3, mb: 2 }}
               onClick={handleSubmit}
             >
-              Sign Up
+             {t('register.7')}
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
                 <Typography variant="body2" sx={{ '>a': { color: '#029a5b' } }}>
                   <NavLink to="/login">
-                    Already have an account? Sign in
+                    {t('register.8')}
                   </NavLink>
                 </Typography>
               </Grid>
@@ -191,9 +194,9 @@ export const Register = () => {
           align="center"
           sx={{ mt: 5, '>*': { color: 'inherit' } }}
         >
-          {'Copyright © '}
+          { t('register.10')}{' © '}
 
-          <NavLink to="/">Ubuntu </NavLink>
+          <NavLink to="/">{t('register.9')} </NavLink>
           {new Date().getFullYear()}
           {'.'}
         </Typography>

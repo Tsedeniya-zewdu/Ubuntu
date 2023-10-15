@@ -5,8 +5,10 @@ import ListItem from '@mui/material/ListItem'
 import ListSubheader from '@mui/material/ListSubheader'
 import parse from 'html-react-parser'
 import axios from 'axios'
+import { useTranslation } from 'react-i18next'
 
 export const ProjectStory = (props) => {
+  const {t} = useTranslation()
   return (
     <Box
       sx={{
@@ -42,7 +44,7 @@ export const ProjectStory = (props) => {
               mb: '15px',
             }}
           >
-            Story
+            {t('project:story.1')}
           </Typography>
           {/* Project Description */}
           <Box
@@ -50,6 +52,7 @@ export const ProjectStory = (props) => {
               overflow: 'scroll',
               overflowX: 'hidden',
               my: '15px',
+              pr: '20px'
             }}
           >
             {parse(props.project.story)}
@@ -77,7 +80,7 @@ export const ProjectStory = (props) => {
                 pb: { xs: '20px', sm: '25px', md: '30px' },
               }}
             >
-              Recent Donations
+              {t('project:story.2')}
             </ListSubheader>
             <Divider light />
             {props.donators &&
@@ -89,22 +92,22 @@ export const ProjectStory = (props) => {
                 let day = dateNow.getUTCDate() - dateObj.getUTCDate()
                 let hour = dateNow.getUTCHours() - dateObj.getUTCHours()
                 let min = dateNow.getUTCMinutes() - dateObj.getUTCMinutes()
-                year = year != 0 ? `${year}yr` : ''
-                month = month != 0 && month > 0 ? `${month}m` : ''
-                day = day != 0 && day > 0 ? `${day}d` : ''
-                hour = hour != 0 && hour > 0 ? `${hour}h` : ''
-                min = min != 0 && min > 0 ? `${min}min` : `0m`
+                year = year != 0 ? `${year}${t('project:story.3')}` : ''
+                month = month != 0 && month > 0 ? `${month}${t('project:story.4')}` : ''
+                day = day != 0 && day > 0 ? `${day}${t('project:story.5')}` : ''
+                hour = hour != 0 && hour > 0 ? `${hour}${t('project:story.6')}` : ''
+                min = min != 0 && min > 0 ? `${min}${t('project:story.7')}` : `0${t('project:story.7')}`
                 let timeAndDate
                 if (year != '') {
-                  timeAndDate = `${year} ago`
+                  timeAndDate = `${year} ${t('project:story.8')}`
                 } else if (month != '') {
-                  timeAndDate = `${month} ago`
+                  timeAndDate = `${month}  ${t('project:story.8')}`
                 } else if (day != '') {
-                  timeAndDate = `${day} ago`
+                  timeAndDate = `${day}  ${t('project:story.8')}`
                 }else if (hour != '') {
-                  timeAndDate = `${hour} ago`
+                  timeAndDate = `${hour}  ${t('project:story.8')}`
                 } else {
-                  timeAndDate = `${min} ago`
+                  timeAndDate = `${min}  ${t('project:story.8')}`
                 }
                 return (
                   <Box key={idx} sx={{ mr: '20px' }}>
@@ -150,7 +153,7 @@ export const ProjectStory = (props) => {
                             gutterBottom
                           >
                             {donator.anonymous
-                              ? 'Anonymous'
+                              ? t('project:story.9')
                               : donator.donator}
                           </Typography>
                           {/* Date */}
@@ -178,7 +181,7 @@ export const ProjectStory = (props) => {
                             fontWeight: '500',
                           }}
                         >
-                          Donated
+                         {t('project:story.10')}
                         </Typography>
                         <Typography
                           variant="h5"
@@ -189,7 +192,7 @@ export const ProjectStory = (props) => {
                             whiteSpace: 'nowrap',
                           }}
                         >
-                          {donator.amount}{' ETB'}
+                          {donator.amount}{t('project:story.11')}
                         </Typography>
                       </Box>
                     </ListItem>

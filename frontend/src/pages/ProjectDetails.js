@@ -63,12 +63,21 @@ export const ProjectDetails = () => {
       if (donators && project) {
         let sum = 0
         let status = 'Open'
+        let completed
         donators.forEach((data) => {
             sum += data.amount
         })
+        let dateNow = new Date()
+        let dateObj = new Date(project[0].deadline)
+        let days = Math.floor(
+          (Date.parse(dateObj) - Date.parse(dateNow)) / (1000 * 60 * 60 * 24)
+        )
         if (sum >= project[0].amount) {
           status = 'Completed'
-        }
+          completed = Date.now()
+        } else if (days < 0) {
+          status = 'Expired'
+        }  
 
         let data = {
           id: project[0]._id,
@@ -77,7 +86,7 @@ export const ProjectDetails = () => {
         }
         // console.log(sum)
 
-        if (sum != project[0].raised) {
+        if (sum != project[0].raised || data.status != project[0].status) {
           await axios.patch('/projects/update/', data)
         }
       }

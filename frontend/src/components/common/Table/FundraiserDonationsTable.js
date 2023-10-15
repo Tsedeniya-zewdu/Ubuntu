@@ -3,10 +3,12 @@ import Box from '@mui/material/Box'
 import { DataGrid } from '@mui/x-data-grid'
 import { AuthContext } from '../../../context/AuthContext'
 import axios from 'axios'
+import { useTranslation } from 'react-i18next'
 
 export const FundraiserDonationsTable = () => {
   const {currentUser} = useContext(AuthContext)
   const [donations, setDonations] = useState([])
+  const {t} = useTranslation()
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -36,26 +38,26 @@ export const FundraiserDonationsTable = () => {
   }
 
   const columns = [
-    { field: 'id', headerName: 'Donation ID', width: 200 },
+    { field: 'id', headerName: t('fundraiser:donation.1'), width: 200 },
     {
       field: 'donator',
-      headerName: 'Donator Name',
+      headerName: t('fundraiser:donation.2'),
       width: 200,
     },
     {
       field: 'title',
-      headerName: 'Project Title',
+      headerName: t('fundraiser:donation.3'),
       width: 330,
     },
     {
       field: 'donatedAmount',
-      headerName: 'Donated Amount',
+      headerName: t('fundraiser:donation.4'),
       description: 'This column has a value getter and is not sortable.',
       width: 200,
     },
     {
       field: 'donatedDate',
-      headerName: 'Donated Date',
+      headerName: t('fundraiser:donation.5'),
       width: 200,
     },
   ]

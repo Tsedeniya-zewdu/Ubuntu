@@ -1,0 +1,50 @@
+{
+    "banner": {
+        "1": "I am,  Because",
+        "2": "We are!",
+        "3": "Ubuntu - Empowering Hopeful Hearts Worldwide",
+        "4": "Make Donation"
+    },
+    "promo": {
+        "1": "Get Funding and Support",
+        "2": "Read More"
+    },
+    "about": {
+        "1": "Empowering hearts, inspiring change, spreading hope, and making a positive global impact through compassion in action.",
+        "2": {
+            "1": "Providing aid to those in need",
+            "2": "Supporting causes that matter",
+            "3": "Making a difference with generosity",
+            "4": "Investing in a better future",
+            "5": "Spreading kindness through giving"
+        },
+        "3": "Creating a global platform that connects compassionate individuals to make a positive impact worldwide.",
+        "4": {
+            "1": "Empowering global giving for all",
+            "2": "Connecting hearts across the globe",
+            "3": "Catalyzing impactful change, everywhere",
+            "4": "Inspiring generosity without borders",
+            "5": "Spreading compassion, creating miracles"
+        },
+        "5": "We value empathy, transparency, inclusivity, integrity, and accountability in all our efforts to serve others.",
+        "6": {
+            "1": "Empathy: Caring profoundly for others",
+            "2": "Transparency: Openness in all interactions",
+            "3": "Inclusivity: Welcoming diverse voices and needs",
+            "4": "Integrity: Honesty and ethical behavior",
+            "5": "Accountability: Taking responsibility for impact"
+        },
+        "7": {
+            "1": "Learn About Us",
+            "2": "We are dedicated to spreading hope and making a positive impact globally through empowering hearts and inspiring change. We believe in compassion in action and working together to make a difference    for a brighter future.",
+            "3": "Our Mission",
+            "4": "Our Vision",
+            "5": "Our Values",
+            "6": "Help is Our Main Goal"
+        }
+    },
+    "project": {
+        "1": "trending fundraisers",
+        "2": "Explore Fundraisers"
+    }
+}

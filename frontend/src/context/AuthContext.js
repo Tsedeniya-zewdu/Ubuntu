@@ -23,10 +23,19 @@ export const AuthContextProvider = ({ children }) => {
   }
 
   const approvePendingProject = async (input) => {
-    const res = await axios.get(`/projects/approve/${input}`, input)
+    if (currentUser.type == 'Super') {
+      const res = await axios.get(`/projects/approve2/${input}`, input)
+    } else {
+      const res = await axios.get(`/projects/approve1/${input}`, input)
+    }
   }
+  
   const rejectPendingProject = async (input) => {
-    const res = await axios.get(`/projects/reject/${input}`, input)
+    if (currentUser.type == 'Super') {
+      const res = await axios.get(`/projects/reject2/${input}`, input)
+    } else {
+      const res = await axios.get(`/projects/reject1/${input}`, input)
+    }
   }
 
   const login = async (inputs) => {
@@ -109,7 +118,13 @@ export const AuthContextProvider = ({ children }) => {
 
   const getAdminNotifications = async () => {
     let sum = 0
-    const res = await axios.get('/notifications/admin')
+    let customPath = ''
+    if (currentUser.type == 'Super') {
+      customPath = 'admin2'
+    } else {
+      customPath = 'admin1'
+    }
+    const res = await axios.get(`/notifications/${customPath}`)
     try {
       res.data.forEach((data) => {
         sum++

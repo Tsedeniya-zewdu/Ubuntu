@@ -11,21 +11,55 @@ import axios from 'axios'
 import parse from 'html-react-parser'
 import AccessTimeIcon from '@mui/icons-material/AccessTime'
 import { useParams } from 'react-router-dom'
+import { Data } from './Data'
+import { Chart } from 'chart.js/auto'
+import { Line } from 'react-chartjs-2'
+import NewsTable from './NewsTable'
+import moment from 'moment';
+import { useTranslation } from 'react-i18next'
 
 export const NewsDetailsComp = (props) => {
-    const [video, setVideo] = useState(false)
-    const [daysLeft, setDaysLeft] = useState()
-    const [progress, setProgress] = useState()
-    const {nid} = useParams()
-  console.log(props.project)
+  const {t} = useTranslation()
+  let graphData = []
+  let tmp
+
+    for (let i = 0; i < props.project.donations.length; i++) {
+      for (let j = 0; j < props.project.donations[i].months.length; j++) {
+        tmp = {
+          amount: props.project.donations[i].months[j].mAmount,
+          date: props.project.donations[i].months[j].month + '/' + props.project.donations[i].year
+        }
+        graphData.push(tmp)
+      }
+  }
+
+  for (let i = 1; i < graphData.length; i++) {
+    graphData[i].amount += graphData[i-1].amount
+  }
+  console.log(graphData)
+  const [chartData, setChartData] = useState({
+      labels: graphData.map((item) => item.date
+    ),
+    datasets: [
+      {
+        label: 'Donation amount',
+        data: graphData.map((item) => item.amount),
+      },
+    ],
+  })
+  const [video, setVideo] = useState(false)
+  const [daysLeft, setDaysLeft] = useState()
+  const [progress, setProgress] = useState()
+  const { nid } = useParams()
+  // console.log(props.project)
   // change banner image and text after some time interval
 
   const [activeIdx, setActiveIdx] = useState(0)
   useEffect(() => {
-    if (props.project.images) {
+    if (props.project.newsimages) {
       const interval = setInterval(() => {
         setActiveIdx(
-          activeIdx === props.project.images.length - 1 ? 0 : activeIdx + 1,
+          activeIdx === props.project.newsimages.length - 1 ? 0 : activeIdx + 1,
         )
       }, 4000)
       return () => clearInterval(interval)
@@ -39,7 +73,7 @@ export const NewsDetailsComp = (props) => {
       const res = await axios.get(`/donations/project/${props.project._id}`)
       try {
         setDonators(res.data)
-        console.log(donators)
+        // console.log(donators)
       } catch (err) {
         console.log(err)
       }
@@ -59,155 +93,130 @@ export const NewsDetailsComp = (props) => {
     )
   }, [])
 
+  let dateNow = new Date()
+  let dateObj = new Date(props.project.released)
+  let year = dateNow.getUTCFullYear() - dateObj.getUTCFullYear()
+  let month = dateNow.getUTCMonth() - dateObj.getUTCMonth()
+  let day = dateNow.getUTCDate() - dateObj.getUTCDate()
+  let hour = dateNow.getUTCHours() - dateObj.getUTCHours()
+  let min = dateNow.getUTCMinutes() - dateObj.getUTCMinutes()
+  year = year != 0 ? `${year}${t('project:story.3')}` : ''
+  month = month != 0 && month > 0 ? `${month}${t('project:story.4')}` : ''
+  day = day != 0 && day > 0 ? `${day}${t('project:story.5')}` : ''
+  hour = hour != 0 && hour > 0 ? `${hour}${t('project:story.6')}` : ''
+  min =
+    min != 0 && min > 0
+      ? `${min}${t('project:story.7')}`
+      : `0${t('project:story.7')}`
+  let timeAndDate
+  if (year != '') {
+    timeAndDate = `${year} ${t('project:story.8')}`
+  } else if (month != '') {
+    timeAndDate = `${month}  ${t('project:story.8')}`
+  } else if (day != '') {
+    timeAndDate = `${day}  ${t('project:story.8')}`
+  } else if (hour != '') {
+    timeAndDate = `${hour}  ${t('project:story.8')}`
+  } else {
+    timeAndDate = `${min}  ${t('project:story.8')}`
+  }
   return (
     <>
-      <div className='container-wrapper'>
-          <div className='container'>
-              <Box className="project-details-wrapper">
-                {/* Left Side */}
-                <Box className="project-details-left">
-                  {/* Image Slider and Bullets wrapper */}
-                  {!video && props.project.images && (
-                    <Box>
-                      {/* Image Slider  */}
-                      <Box className="image-slider">
-                        {props.project.images.map((data, idx) => {
-                          return (
-                            <img
-                              key={data}
-                              className={
-                                activeIdx === idx
-                                  ? 'slider-img show'
-                                  : 'slider-img hide'
-                              }
-                              src={`http://localhost:5000/api/uploads/${data}`}
-                              alt=""
-                            />
-                          )
-                        })}
-                      </Box>
-                      {/* Image Slider Bullets */}
-                      <Box className="image-slider-bullets-wrapper">
-                        <Box className="image-slider-bullets">
-                          {props.project.images.map((data, idx) => {
-                            return (
-                              <Box
-                                key={idx}
-                                onClick={() => setActiveIdx(idx)}
-                                className={
-                                  activeIdx === idx
-                                    ? 'bullets bullet bullet-active'
-                                    : 'bullets bullet'
-                                }
-                              ></Box>
-                            )
-                          })}
-                        </Box>
-                      </Box>
+      <div className="container-wrapper">
+        <div className="container">
+          <Box className="news-details-wrapper">
+            {/* News details banner */}
+            <Box className="news-details-banner">
+              {/* Image Slider and Bullets wrapper */}
+              {!video && props.project.newsimages && (
+                <Box>
+                  {/* Image Slider  */}
+                  <Box className="image-slider">
+                    {props.project.newsimages.map((data, idx) => {
+                      return (
+                        <img
+                          key={data}
+                          className={
+                            activeIdx === idx
+                              ? 'slider-img show'
+                              : 'slider-img hide'
+                          }
+                          src={`http://localhost:5000/api/uploads/${data}`}
+                          alt=""
+                        />
+                      )
+                    })}
+                  </Box>
+                  {/* Image Slider Bullets */}
+                  <Box className="image-slider-bullets-wrapper">
+                    <Box className="image-slider-bullets">
+                      {props.project.newsimages.map((data, idx) => {
+                        return (
+                          <Box
+                            key={idx}
+                            onClick={() => setActiveIdx(idx)}
+                            className={
+                              activeIdx === idx
+                                ? 'bullets bullet bullet-active'
+                                : 'bullets bullet'
+                            }
+                          ></Box>
+                        )
+                      })}
                     </Box>
-                  )}
-                  {/* Video */}
-                  {video && props.project.video && (
-                    <Box className="video-wrapper">
-                      <iframe
-                        id="iframe"
-                        src={`http://localhost:5000/api/uploads/${props.project.video}`}
-                        title="Anjia Architecture Mozambique Introduction."
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                      ></iframe>
-                    </Box>
-                  )}
-                  {/* Photo Button */}
-                  <Button
-                    onClick={() => {
-                      setVideo(false)
-                    }}
-                    className="photo-btn"
-                  >
-                    <Box className="icon-wrapper">
-                      <CameraAltOutlinedIcon sx={{ color: '#222' }} />
-                    </Box>
-                  </Button>
-                  {/* Video Button */}
-                  <Button
-                    onClick={() => {
-                      setVideo(true)
-                    }}
-                    className="video-btn"
-                  >
-                    <Box className="icon-wrapper">
-                      <VideocamOutlinedIcon sx={{ color: '#222' }} />
-                    </Box>
-                  </Button>
-                </Box>
-                {/* Right Side */}
-                <Box className="right-side">
-                  <Box sx={{ width: '100%' }}>
-                    {/* Project Catagory */}
-                    <Typography variant="h6">
-                      <span className="category-title">Category: </span>
-                      <span className="category-text">{props.project.category}</span>
-                    </Typography>
-                    {/* Project Title */}
-                    <Typography variant="h4">
-                      <span className="project-title">Title: </span>{' '}
-                      <span className="project-title-text">{props.project.title}</span>
-                    </Typography>
-                    {/* Project Description */}
-                    <Typography className="desc-title">Short Description</Typography>
-                    <Typography variant="body2" className="desc-text">
-                      {props.project.desc}
-                    </Typography>
-                    {/* Raised amount */}
-                    <Box className="raised-goal-wrapper">
-                      <Box>
-                        <Typography>
-                          <span className="raised-title">Raised: </span>
-                          <span className="raised-text">
-                            {props.project.raised} ETB
-                          </span>
-                        </Typography>
-                      </Box>
-                      <Typography className="raised-percent-text">
-                        {progress}%
-                      </Typography>
-                    </Box>
-                    {/* Progress Bar */}
-                    <Box className="progress-bar">
-                      <Box
-                        className="progress-inner-bar"
-                        sx={{
-                          width: `${progress}%`,
-                        }}
-                      ></Box>
-                    </Box>
-                    {/* Goal */}
-                    <Box sx={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'space-between',
-                        }}>
-                      <Box className="goal-wrapper">
-                        <Box>
-                          <Typography>
-                            <span className="goal-title">Goal: </span>
-                            <span className="goal-text">
-                              {props.project.amount} ETB
-                            </span>
-                          </Typography>
-                        </Box>
-                      </Box>
-                    </Box>
-
                   </Box>
                 </Box>
-              </Box>
-              {/* Story */}
-              <Box className="story-wrapper" sx={{ alignItems: 'flex-start' }}>
-                {/* Story */}
-                <Box sx={{ width: '100%', maxWidth: '772px' }}>
-                  {' '}
-                  {/* Title */}
+              )}
+              {/* Video */}
+              {video && props.project.newsvideo && (
+                <Box className="video-wrapper">
+                  <iframe
+                    id="iframe"
+                    src={`http://localhost:5000/api/uploads/${props.project.newsvideo}`}
+                    title="Anjia Architecture Mozambique Introduction."
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  ></iframe>
+                </Box>
+              )}
+              {/* Photo Button */}
+              <Button
+                onClick={() => {
+                  setVideo(false)
+                }}
+                className="photo-btn"
+              >
+                <Box className="icon-wrapper">
+                  <CameraAltOutlinedIcon sx={{ color: '#222' }} />
+                </Box>
+              </Button>
+              {/* Video Button */}
+              <Button
+                onClick={() => {
+                  setVideo(true)
+                }}
+                className="video-btn"
+              >
+                <Box className="icon-wrapper">
+                  <VideocamOutlinedIcon sx={{ color: '#222' }} />
+                </Box>
+              </Button>
+            </Box>
+          </Box>
+
+          {/* Story */}
+          <Box className="news-story-wrapper">
+            {/* top news title  */}
+            <Box className="news-details-banner-title">
+              <Box
+                sx={{
+                  display: 'flex',
+                  alignItems: 'flex-start',
+                  height: '100%',
+                  width: { xs: '100%', md: '50%' },
+                  maxWidth: '570px',
+                }}
+              >
+                <Box sx={{ width: '100%' }}>
                   <Typography
                     gutterBottom
                     variant="h4"
@@ -218,168 +227,96 @@ export const NewsDetailsComp = (props) => {
                       mb: '15px',
                     }}
                   >
-                    Story
+                    {props.project.title}
                   </Typography>
-                  {/* Project Description */}
+
                   <Box
                     sx={{
-                      overflow: 'scroll',
-                      overflowX: 'hidden',
-                      my: '15px',
+                      display: 'flex', gap: '40px',
+                      // alignItems: 'center'
                     }}
                   >
-                    {parse(props.project.story)}
-                  </Box>
-                </Box>
-                {/* Recent Donations */}
-                {/* Recent Donations */}
-                <Box sx={{}}>
-                  <List
-                    sx={{
-                      minWidth: { xs: '248px', sm: '400px' },
-                      width: '100%',
-                      maxWidth: '450px',
-                      bgcolor: 'background.paper',
-                      position: 'relative',
-                      overflow: 'auto',
-                      height: '400px',
-                    }}
-                    subheader={<li />}
-                  >
-                    <ListSubheader
+                    {/* Project's owner */}
+                    <Box
                       sx={{
-                        fontSize: '26px',
-                        fontWeight: '700',
-                        color: '#1f2230',
-                        pb: { xs: '20px', sm: '25px', md: '30px' },
+                        display: 'flex',
+                        alignItems: 'center',
+                        img: {
+                          width: '30px',
+                          height: '30px',
+                          borderRadius: '50%',
+                          mr: '10px',
+                        },
                       }}
                     >
-                      Donations History
-                    </ListSubheader>
-                    <Divider light />
-                    {donators.map((donator, idx) => {
-                      let dateNow = new Date()
-                      let dateObj = new Date(donator.updatedAt)
-                      let year = dateNow.getUTCFullYear() - dateObj.getUTCFullYear()
-                      let month = dateNow.getUTCMonth() - dateObj.getUTCMonth()
-                      let day = dateNow.getUTCDate() - dateObj.getUTCDate()
-                      let hour = dateNow.getUTCHours() - dateObj.getUTCHours()
-                      let min = dateNow.getUTCMinutes() - dateObj.getUTCMinutes()
-                      year = year != 0 ? `${year}yr` : ''
-                      month = month != 0 && month > 0 ? `${month}m` : ''
-                      day = day != 0 && day > 0 ? `${day}d` : ''
-                      hour = hour != 0 && hour > 0 ? `${hour}h` : ''
-                      min = min != 0 && min > 0 ? `${min}min` : `0m`
-                      let timeAndDate
-                      if (year != '') {
-                        timeAndDate = `${year} ago`
-                      } else if (month != '') {
-                        timeAndDate = `${month} ago`
-                      } else if (day != '') {
-                        timeAndDate = `${day} ago`
-                      } else if (hour != '') {
-                        timeAndDate = `${hour} ago`
-                      } else {
-                        timeAndDate = `${min} ago`
-                      }
-                      return (
-                        <Box key={idx} sx={{ mr: '20px' }}>
-                          <ListItem
-                            sx={{
-                              justifyContent: 'space-between',
-                              gap: { xs: '20px' },
-                              maxHeight: '60px',
-                            }}
-                          >
-                            {/* Donators */}
-                            <Box
-                              sx={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                img: {
-                                  width: '45px',
-                                  height: '45px',
-                                  mr: '10px',
-                                  borderRadius: '50%',
-                                },
-                              }}
-                            >
-                              <img
-                                src={
-                                  donator.anonymous
-                                    ? 'http://localhost:5000/api/uploads/profile-icon.png'
-                                    : (donator.user[0] ? `http://localhost:5000/api/uploads/${donator.user[0].image}` : 'http://localhost:5000/api/uploads/profile-icon.png')
-                                }
-                                alt="avator"
-                              />
-                              <Box sx={{}}>
-                                {/* Name */}
-                                <Typography
-                                  variant="h5"
-                                  sx={{
-                                    fontSize: '14px',
-                                    color: '#5e848c',
-                                    fontWeight: '500',
-                                    height: '18px',
-                                    overflow: 'hidden',
-                                  }}
-                                  gutterBottom
-                                >
-                                  {donator.anonymous
-                                    ? 'Anonymous'
-                                    : donator.donator}
-                                </Typography>
-                                {/* Date */}
-                                <Typography
-                                  variant="h5"
-                                  sx={{
-                                    fontSize: '14px',
-                                    color: '#696969',
-                                    height: '18px',
-                                    overflow: 'hidden',
-                                  }}
-                                >
-                                  {timeAndDate}
-                                </Typography>
-                              </Box>
-                            </Box>
-                            {/* Amount Donated */}
-                            <Box>
-                              <Typography
-                                variant="h5"
-                                gutterBottom
-                                sx={{
-                                  fontSize: '14px',
-                                  color: '#5e848c',
-                                  fontWeight: '500',
-                                }}
-                              >
-                                Donated
-                              </Typography>
-                              <Typography
-                                variant="h5"
-                                sx={{
-                                  fontSize: '14px',
-                                  fontWeight: '700',
-                                  color: '#029a5b',
-                                  whiteSpace: 'nowrap',
-                                }}
-                              >
-                                {donator.amount}{' ETB'}
-          
-                              </Typography>
-                            </Box>
-                          </ListItem>
-                          <Divider light />
-                        </Box>
-                      )
-                    })}
-                  </List>
+                      <img
+                        src={`http://localhost:5000/api/uploads/${props.project.details[0].image}`}
+                        alt="avator"
+                      />
+                      <Typography
+                        variant="h5"
+                        sx={{
+                          fontSize: '14px',
+                          color: '#696969',
+                          // height: '45px',
+                          fontWeight: '500',
+                          overflow: 'hidden',
+                        }}
+                        gutterBottom
+                      >
+                        Fundraiser: {props.project.details[0].name}
+                      </Typography>
+                    </Box>
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                      }}
+                    >
+                      <AccessTimeIcon
+                        sx={{
+                          width: '20px',
+                          height: '20px',
+                          color: '#029a5b',
+                          mr: '7px',
+                        }}
+                      />
+                      <Typography
+                        sx={{
+                          color: '#696969',
+                          fontSize: '14px',
+                          fontWeight: '400',
+                          height: '18px',
+                          overflow: 'hidden',
+                          span: {
+                            ml: '3px',
+                          },
+                        }}
+                      >
+                       Released: {timeAndDate}
+                      </Typography>
+                    </Box>
+                  </Box>
                 </Box>
               </Box>
-          </div>
+            </Box>
+            {/* Story */}
+            <Box sx={{ width: '100%', maxWidth: '1000px' }}>
+              {/* Project Description */}
+              <Box
+                className="news-desc"
+                sx={{
+                  overflow: 'scroll',
+                  overflowX: 'hidden',
+                  my: '15px',
+                }}
+              >
+                {parse(props.project.newsdetail)}
+              </Box>
+            </Box>
+          </Box>
+        </div>
       </div>
     </>
   )
 }
-

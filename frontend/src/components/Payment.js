@@ -15,9 +15,12 @@ import { Link, useParams } from 'react-router-dom'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { v4 as uuidv4 } from 'uuid'
+import { useTranslation } from 'react-i18next'
 
 export const Payment = (props) => {
   const navigate = useNavigate()
+
+  const {t} = useTranslation()
 
   const { currentUser } = useContext(AuthContext)
   const { pid } = useParams()
@@ -51,40 +54,6 @@ export const Payment = (props) => {
 
   const handleChange = (e) => {
     setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }))
-  }
-
-  const handleDonate = async (e) => {
-    e.preventDefault()
-    if (!termsChecked) {
-      setShowErr('Please read and agree to our terms!')
-    } else {
-      let tx = document.getElementById("tx_ref")
-      
-      let donation = {
-        txref: txRef,
-        user: user,
-        fundraiser: props.project.fundraiser,
-        project: props.project._id,
-        donator: inputs.fname + " " + inputs.lname,
-        amount: inputs.amount,
-        status: 'Success',
-        anonymous: anonymousChecked,
-        email: inputs.email,
-        comment: inputs.comment,
-        terms: termsChecked,
-        projectId: props.project._id,
-        userId: currentUser ? currentUser._id : '',
-        fundraiserId: props.project.fundraiser,
-      }
-
-      const res = await axios.post('/donations/', donation)
-      try {
-        // navigate('/thankyou')
-        console.log("success")
-      } catch (err) {
-        console.log(err)
-      }
-    }
   }
 
   return (
@@ -133,7 +102,7 @@ export const Payment = (props) => {
               pb: { xs: '20px' },
             }}
           >
-            Make Donation
+            {t('project:donation.1')}
           </Typography>
 
           <form method="POST" action="https://api.chapa.co/v1/hosted/pay">
@@ -180,7 +149,7 @@ export const Payment = (props) => {
                   alignItems: 'center',
                 }}
               >
-                <Typography>Payment Options</Typography>
+                <Typography>{t('project:donation.2')}</Typography>
                 <Box
                   sx={{
                     my: '20px',
@@ -208,13 +177,13 @@ export const Payment = (props) => {
                   size="small"
                   name="fname"
                   onChange={handleChange}
-                  label="First Name"
+                  label={t('project:donation.3')}
                   required
                 />
                 <TextField
                   size="small"
                   type="text"
-                  label="Last Name"
+                  label={t('project:donation.4')}
                   name="lname"
                   onChange={handleChange}
                   
@@ -235,13 +204,13 @@ export const Payment = (props) => {
                   name="phone"
                   type="number"
                   onChange={handleChange}
-                  label="Phone Number"
+                  label={t('project:donation.5')}
                   required
                 />
                 <TextField
                   size="small"
                   type="email"
-                  label="Email Address"
+                  label={t('project:donation.6')}
                   name="email"
                   onChange={handleChange}
                   
@@ -265,11 +234,11 @@ export const Payment = (props) => {
                     '>*': { fontWeight: '700', color: '#fff' },
                   }}
                 >
-                  <span>Donation</span>
+                  <span>{t('project:donation.7')}</span>
                 </Box>
                 <TextField
                   type="number"
-                  label="amount"
+                  label={t('project:donation.8')}
                   size="small"
                   sx={{ width: '100%' }}
                   name="amount"
@@ -285,14 +254,14 @@ export const Payment = (props) => {
                     onChange={handleAnonymousCheck}
                   />
                 }
-                label="Make me anonymous"
+                label={t('project:donation.9')}
                 sx={{ mb: '20px' }}
               />
               {/* Comment */}
               <TextField
                 rows={2}
                 multiline={true}
-                label="Leave a comment"
+                label={t('project:donation.10')}
                 sx={{ width: '100%', mb: '20px' }}
                 name="comment"
                 onChange={handleChange}
@@ -313,7 +282,7 @@ export const Payment = (props) => {
                       onChange={handleTermssCheck}
                     />
                   }
-                  label="Agree to Terms?"
+                  label={t('project:donation.11')}
                 />
                 <a href='/terms' target='_blank'>
                 <Button
@@ -321,7 +290,7 @@ export const Payment = (props) => {
                   
                   sx={{ textTransform: 'capitalize', fontSize: '16px' }}
                 >
-                  Show Terms
+                  {t('project:donation.12')}
                 </Button>
                 </a>
               </Box>
@@ -341,7 +310,7 @@ export const Payment = (props) => {
                   type="submit"
                   // onClick={handleDonate}
                 >
-                  Donate Now
+                 {t('project:donation.13')}
                 </Button>
               </Box>
             </Box>

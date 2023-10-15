@@ -15,6 +15,7 @@ import {
   RadioGroup,
 } from '@mui/material'
 import { AuthContext } from './../context/AuthContext'
+import { useTranslation } from 'react-i18next'
 
 export const AdminRegister = () => {
   // For holding inputs data
@@ -23,6 +24,7 @@ export const AdminRegister = () => {
     password: '',
     name: '',
     role: 'Admin',
+    type: 'Normal'
   })
 
   // For showing loging Errors
@@ -70,6 +72,8 @@ export const AdminRegister = () => {
     }
   }, [currentUser])
 
+  const {t} = useTranslation()
+
   return (
     <div>
       <Container component="main" maxWidth="xs">
@@ -91,17 +95,43 @@ export const AdminRegister = () => {
             <img src="/images/logo.png" alt="logo" />
           </Button>
           <Typography component="h1" variant="h5">
-            Admin Account Registration
+            {t('register.11')}
           </Typography>
           <Box component="form" noValidate sx={{ mt: 3 }}>
-
+          <FormControl>
+              <RadioGroup
+                aria-labelledby="demo-controlled-radio-buttons-group"
+                name="type"
+                value={inputs.type}
+                onChange={handleChange}
+                row
+              >
+                {' '}
+                <Box className="account-type-wrapper">
+                  <Box className="account-type-box">
+                    <FormControlLabel
+                      value="Normal"
+                      control={<Radio />}
+                      label={t('register.12')}
+                    />{' '}
+                  </Box>
+                  <Box className="account-type-box">
+                    <FormControlLabel
+                      value="Super"
+                      control={<Radio />}
+                      label={t('register.13')}
+                    />
+                  </Box>{' '}
+                </Box>
+              </RadioGroup>
+            </FormControl>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={12}>
                 <TextField
                   required
                   fullWidth
                   id="name"
-                  label="Full Name"
+                  label={t('register.4')}
                   name="name"
                   onChange={handleChange}
                 />
@@ -111,7 +141,7 @@ export const AdminRegister = () => {
                   required
                   fullWidth
                   id="email"
-                  label="Email Address"
+                  label={t('register.5')}
                   type="email"
                   name="email"
                   autoComplete="email"
@@ -123,7 +153,7 @@ export const AdminRegister = () => {
                   required
                   fullWidth
                   name="password"
-                  label="Password"
+                  label={t('register.6')}
                   type="password"
                   id="password"
                   autoComplete="new-password"
@@ -138,7 +168,7 @@ export const AdminRegister = () => {
               sx={{ mt: 3, mb: 2 }}
               onClick={handleSubmit}
             >
-              Register
+              {t('register.7')}
             </Button>
             <Grid container justifyContent="flex-end">
             </Grid>
@@ -158,9 +188,9 @@ export const AdminRegister = () => {
           align="center"
           sx={{ mt: 5, '>*': { color: 'inherit' } }}
         >
-          {'Copyright © '}
+         {t('register.10')} {' © '}
 
-          <NavLink to="/">Ubuntu </NavLink>
+          <NavLink to="/">{t('register.9')} </NavLink>
           {new Date().getFullYear()}
           {'.'}
         </Typography>

@@ -11,6 +11,7 @@ import {
 } from './Common'
 import img1 from '../assets/about-img-1.jpg'
 import makeStyles from '@mui/styles/makeStyles'
+import { useTranslation } from 'react-i18next'
 
 const myStyles = makeStyles({
   changeTextColor: {
@@ -18,48 +19,52 @@ const myStyles = makeStyles({
   },
 })
 
-const AboutData = [
-  {
-    desc:
-      'Empowering hearts, inspiring change, spreading hope, and making a positive global impact through compassion in action.',
-    img: '/images/our-mission-img-1.jpg',
-    details: [
-      'Providing aid to those in need',
-      'Supporting causes that matter',
-      ' Making a difference with generosity',
-      'Investing in a better future',
-      'Spreading kindness through giving',
-    ],
-  },
-  {
-    desc:
-      'Creating a global platform that connects compassionate individuals to make a positive impact worldwide.',
-    img: '/images/our-vision-img-1.jpg',
-    details: [
-      'Empowering global giving for all',
-      'Connecting hearts across the globe',
-      'Catalyzing impactful change, everywhere',
-      'Inspiring generosity without borders',
-      'Spreading compassion, creating miracles',
-    ],
-  },
-  {
-    desc:
-      'We value empathy, transparency, inclusivity, integrity, and accountability in all our efforts to serve others.',
-    img: '/images/our-values-img-1.jpg',
-    details: [
-      'Empathy: Caring profoundly for others',
-      'Transparency: Openness in all interactions',
-      'Inclusivity: Welcoming diverse voices and needs',
-      'Integrity: Honesty and ethical behavior',
-      'Accountability: Taking responsibility for impact',
-    ],
-  },
-]
+
 
 export const AboutHome = () => {
   const [current, setCurrent] = useState(0)
   const classes = myStyles()
+
+  const {t} = useTranslation()
+
+  const AboutData = [
+    {
+      desc:
+      t('home:about.1'),
+      img: '/images/our-mission-img-1.jpg',
+      details: [
+        t('home:about.2.1'),
+        t('home:about.2.2'),
+        t('home:about.2.3'),
+        t('home:about.2.4'),
+        t('home:about.2.5'),
+      ],
+    },
+    {
+      desc:
+      t('home:about.3'),
+      img: '/images/our-vision-img-1.jpg',
+      details: [
+        t('home:about.4.1'),
+        t('home:about.4.2'),
+        t('home:about.4.3'),
+        t('home:about.4.4'),
+        t('home:about.4.5'),
+      ],
+    },
+    {
+      desc:
+      t('home:about.5'),
+      img: '/images/our-values-img-1.jpg',
+      details: [
+        t('home:about.6.1'),
+        t('home:about.6.2'),
+        t('home:about.6.3'),
+        t('home:about.6.4'),
+        t('home:about.6.5'),
+      ],
+    },
+  ]
   return (
     <Box
       sx={{
@@ -93,7 +98,7 @@ export const AboutHome = () => {
               maxWidth: '697px',
             }}
           >
-            <StyledTitle1 gutterBottom>Help is Our Main Goal</StyledTitle1>
+            <StyledTitle1 gutterBottom>{t('home:about.7.6')}</StyledTitle1>
             <StyledTitle2
               gutterBottom
               variant="h2"
@@ -101,7 +106,7 @@ export const AboutHome = () => {
                 fontSize: { xs: '28px', sm: '32px', md: '38px', lg: '42px' },
               }}
             >
-              Learn About Us
+             {t('home:about.7.1')}
             </StyledTitle2>
           </Box>
           {/* Top Right */}
@@ -114,10 +119,7 @@ export const AboutHome = () => {
               borderLeft: '3px solid #029a5b',
             }}
           >
-            We are dedicated to spreading hope and making a positive impact
-            globally through empowering hearts and inspiring change. We believe
-            in compassion in action and working together to make a difference
-            for a brighter future.
+           {t('home:about.7.2')}
           </Typography>
         </Box>
         {/* Bottom */}
@@ -159,7 +161,7 @@ export const AboutHome = () => {
                 <StyledText1
                   className={!(current === 0) ? classes.changeTextColor : ''}
                 >
-                  Our Mission
+                  {t('home:about.7.3')}
                 </StyledText1>
               </Button>
               <Button
@@ -170,7 +172,7 @@ export const AboutHome = () => {
                 <StyledText1
                   className={!(current === 1) ? classes.changeTextColor : ''}
                 >
-                  Our Vision
+                 {t('home:about.7.4')}
                 </StyledText1>
               </Button>
               <Button
@@ -181,7 +183,7 @@ export const AboutHome = () => {
                 <StyledText1
                   className={!(current === 2) ? classes.changeTextColor : ''}
                 >
-                  Our Values
+                 {t('home:about.7.5')}
                 </StyledText1>
               </Button>
             </Box>

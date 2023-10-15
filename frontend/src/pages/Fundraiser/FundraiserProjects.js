@@ -6,11 +6,13 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import AddIcon from '@mui/icons-material/Add';
 import axios from 'axios'
 import { AuthContext } from '../../context/AuthContext';
+import { useTranslation } from 'react-i18next';
 
 export const FundraiserProjects = () => {
   const navigate = useNavigate()
   const [projects, setProjects] = useState([])
   const { currentUser } = useContext(AuthContext)
+  const {t} = useTranslation()
   const currentFundraiser = {
     fundraiser: currentUser._id
   }
@@ -39,10 +41,10 @@ export const FundraiserProjects = () => {
               sx={{ background: 'gray', mb: '20px', maxWidth: '100px', textTransform: 'none', '&:hover':{background: 'gray'} }}
               startIcon={<ArrowBackIcon />}
           >
-            Back
+            {t('btn.1')}
           </Button>
           <Typography variant="h5" sx={{ fontWeight: '700', pb: '50px' }}>
-            My Projects
+            {t('title.6')}
           </Typography>
           </Box>
           <Button
@@ -51,7 +53,7 @@ export const FundraiserProjects = () => {
             sx={{ minWidth: '100px', textTransform: 'none' }}
             startIcon={<AddIcon />}
           >
-            New Project
+           {t('btn.5')}
           </Button>
         </Box>
         <Box
@@ -74,11 +76,11 @@ export const FundraiserProjects = () => {
                   daysLeft={data.daysLeft}
                   amount={data.amount}
                   status={data.status}
-                  approval={data.approval}
+                  approval={data.projectApproval2}
                   request={data.request}
                   view={`/fundraiser-details/${data._id}`}
                   edit={`/fundraiser-update/${data._id}`}
-                  pending={(data.approval == 'Pending') ? true : false}
+                  pending={(data.projectApproval2 == 'Pending' || data.projectApproval2 == 'waiting') ? true : false}
                 />
               )
            }
@@ -104,11 +106,11 @@ export const FundraiserProjects = () => {
                   daysLeft={data.daysLeft}
                   amount={data.amount}
                   status={data.status}
-                  approval={data.approval}
+                  approval={data.projectApproval2}
                   request={data.request}
                   view={`/fundraiser-details/${data._id}`}
                   edit={`/fundraiser-update/${data._id}`}
-                  pending={(data.approval == 'Pending') ? true : false}
+                  pending={(data.projectApproval2 == 'Pending' || data.projectApproval2 == 'waiting') ? true : false}
                 />
               )
             }

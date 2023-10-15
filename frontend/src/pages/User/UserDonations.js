@@ -3,9 +3,12 @@ import React from 'react'
 import {  UserDonationsTable } from '../../components/common/Table/UserDonationsTable'
 import { useNavigate, useParams } from 'react-router-dom'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
+import { useTranslation } from 'react-i18next'
 
 export const UserDonations = () => {
   const navigate = useNavigate()
+
+  const {t} = useTranslation()
 
   return (
     <Box sx={{ minHeight: '100vh' }} className="container-wrapper">
@@ -14,7 +17,7 @@ export const UserDonations = () => {
           sx={{ display: 'flex', flexDirection: 'column-reverse', gap: '20px' }}
         >
           <Typography variant="h5" sx={{ fontWeight: '700', pb: '50px' }}>
-            My Donations History
+            {t('title.2')}
           </Typography>
           <Button
             onClick={() => navigate('/user')}
@@ -28,7 +31,7 @@ export const UserDonations = () => {
             }}
             startIcon={<ArrowBackIcon />}
           >
-            Back
+            {t('btn.1')}
           </Button>
         </Box>
         <UserDonationsTable />

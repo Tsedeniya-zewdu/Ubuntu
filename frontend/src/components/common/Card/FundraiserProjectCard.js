@@ -3,14 +3,16 @@ import React from 'react'
 import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined'
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined'
 import { useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 
 export const FundraiserProjectCard = (props) => {
-    const navigate = useNavigate()
+  const navigate = useNavigate()
+  const {t} = useTranslation()
   return (
     <Card className={props.pending ? "fundraiser-project-card new" : "fundraiser-project-card"}>
       <div className="left">
         <Typography>
-          <span className="title">Project Title:</span>
+          <span className="title">{t('fundraiser:project.1')}</span>
           <span className="content">{props.title}</span>
         </Typography>
         {/* <Typography>
@@ -20,7 +22,7 @@ export const FundraiserProjectCard = (props) => {
           </span>{' '}
         </Typography> */}
         <Typography>
-          <span className="title">Project Status:</span>
+          <span className="title">{t('fundraiser:project.2')}</span>
           <span className="content">{props.status}</span>
         </Typography>
       </div>
@@ -30,11 +32,11 @@ export const FundraiserProjectCard = (props) => {
           <span className="content">{props.daysLeft}</span>
         </Typography> */}
         <Typography>
-          <span className="title">Amount :</span>
+          <span className="title">{t('fundraiser:project.3')}</span>
           <span className="content">{props.amount}</span>{' '}
         </Typography>
         <Typography>
-          <span className="title">{props.request} request:</span>
+          <span className="title">{props.request}{t('fundraiser:project.4')}</span>
           <span className="content">{props.approval}</span>
         </Typography>
       </div>

@@ -9,47 +9,52 @@ import {
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { StyledButton } from './Common'
+import { useTranslation } from 'react-i18next'
 
+
+export const ProjectCatagory = () => {
+
+  const {t} = useTranslation()
+  
 const projects = [
   {
-    title: 'Medical',
-    desc: 'Provide For Medical & Health',
+    title: t('category.1.title'),
+    desc: t('category.1.desc'),
     icon: '/images/medical-icon.png',
     path: '/project/Medical',
   },
   {
-    title: 'Disaster',
-    desc: 'For Impacted By Disaster',
+    title: t('category.2.title'),
+    desc: t('category.2.desc'),
     icon: '/images/disaster-icon.png',
     path: '/project/Disaster',
   },
   {
-    title: 'Family',
-    desc: 'Provide For Families',
+    title: t('category.3.title'),
+    desc: t('category.3.desc'),
     icon: '/images/family-icon.png',
     path: '/project/Family',
   },
   {
-    title: 'Children',
-    desc: 'Provide For Children',
+    title: t('category.4.title'),
+    desc: t('category.4.desc'),
     icon: '/images/children-icon.png',
     path: '/project/Children',
   },
   {
-    title: 'Education',
-    desc: 'For Education & Schools',
+    title: t('category.5.title'),
+    desc: t('category.5.desc'),
     icon: '/images/education-icon.png',
     path: '/project/Education',
   },
   {
-    title: 'Wildlife',
-    desc: 'Provide For Wildlife',
+    title: t('category.6.title'),
+    desc: t('category.6.desc'),
     icon: '/images/wildlife-icon.png',
-    path: '/project/Wildlife',
+    path: '/project/Other',
   },
-]
-
-export const ProjectCatagory = () => {
+  ]
+  
   return (
     <Box
       sx={{
@@ -72,7 +77,7 @@ export const ProjectCatagory = () => {
               fontWeight: '700',
             }}
           >
-            POPULar Categories
+           {t('category.title1')}
           </Typography>
           <Typography
             variant="h2"
@@ -82,7 +87,7 @@ export const ProjectCatagory = () => {
               fontWeight: '700',
             }}
           >
-            Browse by Categories
+           {t('category.title2')}
           </Typography>
         </Box>
         <StyledButton>Explore</StyledButton>

@@ -3,9 +3,11 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import { UserProfileComp } from './../../components/common/UserProfileComp';
+import { useTranslation } from 'react-i18next';
 
 export const UserProfile = () => {
   const navigate = useNavigate()
+  const {t} = useTranslation()
   return (
     <Box sx={{ minHeight: '100vh' }} className="container-wrapper">
       <div className="container">
@@ -13,7 +15,7 @@ export const UserProfile = () => {
           sx={{ display: 'flex', flexDirection: 'column-reverse', gap: '20px' }}
         >
           <Typography variant="h5" sx={{ fontWeight: '700', pb: '50px' }}>
-            My Account
+            {t('title.3')}
           </Typography>
           <Button
             onClick={() => navigate('/user')}
@@ -27,7 +29,7 @@ export const UserProfile = () => {
             }}
             startIcon={<ArrowBackIcon />}
           >
-            Back
+            {t('btn.1')}
           </Button>
         </Box>
         <UserProfileComp img='/images/profile-icon.png' />

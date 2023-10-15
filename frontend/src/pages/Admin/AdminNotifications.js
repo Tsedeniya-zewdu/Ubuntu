@@ -8,18 +8,24 @@ import { AuthContext } from '../../context/AuthContext'
 
 export const AdminNotifications = () => {
   
-  const { getAdminNotifications } = useContext(AuthContext)
+  const { getAdminNotifications, currentUser } = useContext(AuthContext)
   
   const navigate = useNavigate()
   const [projects, setProjects] = useState([])
   const [projectsHistory, setProjectHistory] = useState([])
+  let customPath = ''
+  if (currentUser.type == 'Super') {
+    customPath = 'admin2'
+  } else {
+    customPath = 'admin1'
+  }
 
   useEffect(() => {
     getAdminNotifications().then((res) => {
       setProjects(res)
     })
     const fetchData = async () => {
-      let res = await axios.get('/notifications/admin/history')
+      let res = await axios.get(`/notifications/${customPath}/history`)
       try {
         setProjectHistory(res.data)
       } catch (err) {
@@ -92,7 +98,7 @@ export const AdminNotifications = () => {
                   time={timeAndDate}
                   type={data.request}
                   status={data.status}
-                  approval={data.approval}
+                  approval={currentUser.type == 'Super' ? data.projectApproval2 : data.projectApproval1}
                   new={true}
                 />
               )
@@ -137,7 +143,7 @@ export const AdminNotifications = () => {
                   time={timeAndDate}
                   type={data.request}
                   status={data.status}
-                  approval={data.approval}
+                  approval={data.projectApproval2}
                 />
               )
             })}

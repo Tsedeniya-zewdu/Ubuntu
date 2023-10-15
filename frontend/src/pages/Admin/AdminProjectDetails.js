@@ -11,9 +11,20 @@ export const AdminProjectDetails = () => {
   const navigate = useNavigate()
   const { pid } = useParams()
   const [project, setProject] = useState()
-  const { approvePendingProject, rejectPendingProject } = useContext(
+  const { approvePendingProject, rejectPendingProject, currentUser } = useContext(
     AuthContext,
   )
+
+  let projectStatus = '' 
+  if (currentUser.type == 'Super') {
+    if (project && project[0].projectApproval2 == "Pending") {
+      projectStatus = 'Pending'
+    }
+  } else {
+    if (project && project[0].projectApproval1 == "Pending") {
+      projectStatus = 'Pending'
+    }
+  }
 
   // Get a project data from db
   const fetchData = async () => {
@@ -57,7 +68,7 @@ export const AdminProjectDetails = () => {
         >
           <Box>
             <Button
-              onClick={() => navigate((project && project[0].approval == "Pending")? '/admin-notifications' : '/admin-projects')}
+              onClick={() => navigate((projectStatus == "Pending")? '/admin-notifications' : '/admin-projects')}
               variant="contained"
               sx={{
                 background: 'gray',
@@ -74,7 +85,7 @@ export const AdminProjectDetails = () => {
               Project Details
             </Typography>
           </Box>
-         {project && project[0].approval == "Pending" && <Box sx={{ display: 'flex', gap: '30px' }}>
+         {projectStatus == "Pending" && <Box sx={{ display: 'flex', gap: '30px' }}>
             <Button
               onClick={handleApprove}
               variant="contained"

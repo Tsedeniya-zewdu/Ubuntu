@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from 'uuid'
 import fs from 'fs'
 import { sendEmail } from '../utils/sendEmail.js'
 import { UserModel } from '../models/User.js'
+import { DonationModel } from '../models/donation.js'
 
 export const getProjects = async (req, res) => {
   let joinedData = await ProjectModel.aggregate([
@@ -19,7 +20,8 @@ export const getProjects = async (req, res) => {
     },
     {
       $match: {
-        approval: 'Approved',
+        projectApproval1: 'Approved',
+        projectApproval2: "Approved",
         status: 'Open',
       },
     },
@@ -41,13 +43,267 @@ export const getCompletedProjects = async (req, res) => {
     },
     {
       $match: {
-        approval: 'Approved',
+        projectApproval1: 'Approved',
+        projectApproval2: "Approved",
         status: 'Completed',
       },
     },
     { $sort: { updatedAt: -1 } },
   ])
   res.status(200).send(joinedData)
+}
+
+// get expired projects
+export const getExpiredProjects = async (req, res) => {
+  let joinedData = await ProjectModel.aggregate([
+    {
+      $lookup: {
+        from: 'fundraisers',
+        localField: 'fundraiser',
+        foreignField: '_id',
+        as: 'details',
+      },
+    },
+    {
+      $match: {
+        status: 'Expired',
+      },
+    },
+    { $sort: { updatedAt: -1 } },
+  ])
+  res.status(200).send(joinedData)
+}
+
+// get rejected projects
+export const getRejectedProjects = async (req, res) => {
+  let joinedData = await ProjectModel.aggregate([
+    {
+      $lookup: {
+        from: 'fundraisers',
+        localField: 'fundraiser',
+        foreignField: '_id',
+        as: 'details',
+      },
+    },
+    {
+      $match: {
+        status: 'Rejected',
+      },
+    },
+    { $sort: { updatedAt: -1 } },
+  ])
+  res.status(200).send(joinedData)
+}
+
+// get completed projects
+export const getNewsProjects = async (req, res) => {
+  let joinedData = await ProjectModel.aggregate([
+    {
+      $lookup: {
+        from: 'fundraisers',
+        localField: 'fundraiser',
+        foreignField: '_id',
+        as: 'details',
+      },
+    },
+    {
+      $match: {
+        projectApproval1: 'Approved',
+        projectApproval2: 'Approved',
+        status: 'Completed',
+        news: 'Visible',
+      },
+    },
+    { $sort: { updatedAt: -1 } },
+  ])
+  res.status(200).send(joinedData)
+}
+
+// get completed projects
+export const getPendingNews = async (req, res) => {
+  let joinedData = await ProjectModel.aggregate([
+    {
+      $lookup: {
+        from: 'fundraisers',
+        localField: 'fundraiser',
+        foreignField: '_id',
+        as: 'details',
+      },
+    },
+    {
+      $match: {
+        status: 'Completed',
+        news: 'Hidden'
+      },
+    },
+    { $sort: { updatedAt: -1 } },
+  ])
+  res.status(200).send(joinedData)
+}
+
+// get completed projects donations graph data 
+export const getCompletedProjectGraphData = async (req, res) => {
+  const { id } = req.params
+  // let pid = mongoose.Types.ObjectId(id);
+  console.log(id)
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ error: 'No such project' })
+  }
+  // get donations per project
+  let joinedData = await DonationModel.aggregate([
+    {
+      $lookup: {
+        from: 'fundraisers',
+        localField: 'fundraiser',
+        foreignField: '_id',
+        as: 'fundraiser',
+      },
+    },
+    {
+      $lookup: {
+        from: 'projects',
+        localField: 'project',
+        foreignField: '_id',
+        as: 'project',
+      },
+    },
+    {
+      $lookup: {
+        from: 'users',
+        localField: 'user',
+        foreignField: '_id',
+        as: 'user',
+      },
+    },
+    {
+      $match: {
+        projectId: id,
+      },
+    },
+    { $sort: { createdAt: 1 } },
+  ])
+
+  let donationData 
+  let donationsData = []
+  let donationCounter = 0
+
+
+
+    let initialDateObj = new Date(joinedData[0].createdAt)
+    donationData = {
+      year: initialDateObj.getUTCFullYear(),
+      yAmount: 0,
+      months: [
+        {
+          month: initialDateObj.getUTCMonth(),
+          mAmount: 0,
+          days: [
+            {
+              day: initialDateObj.getUTCDay(),
+              dAmount: 0
+            }
+          ]
+        }
+      ]
+    }
+    donationsData.push(donationData)
+
+  joinedData.forEach((donation) => { 
+    let currentDateObj = new Date(donation.createdAt)
+    let currentYear = currentDateObj.getUTCFullYear()
+    let currentMonth = currentDateObj.getUTCMonth() + 1
+    let currentDay = currentDateObj.getUTCDay() + 1
+    let currentYearAmount = donation.amount
+    let currentMonthAmount = donation.amount
+    let currentDayAmount = donation.amount
+    // if (!donationCounter) {
+    //   let initialDateObj = new Date(donation.createdAt)
+    //   donationData = {
+    //     year: initialDateObj.getUTCFullYear(),
+    //     yAmount: donation.amount,
+    //     months: [
+    //       {
+    //         month: initialDateObj.getUTCMonth() + 1,
+    //         mAmount: donation.amount,
+    //         days: [
+    //           {
+    //             day: initialDateObj.getUTCDay() + 1,
+    //             dAmount: donation.amount
+    //           }
+    //         ]
+    //       }
+    //     ]
+    //   }
+    //   console.log("First Year")
+    //   donationsData.push(donationData)
+    // } else if (donationsData.length > 0) {
+      if (currentYear == donationsData[donationsData.length - 1].year) { 
+        console.log("Same Year")
+        // yes -> add amount on year amount , 
+        donationsData[donationsData.length - 1].yAmount += currentYearAmount
+        // then check current month match with previous
+        donationsData[donationsData.length - 1].months.forEach((monthData) => {
+          if (currentMonth == monthData.month) { 
+            monthData.mAmount = currentMonthAmount
+            // then check current day match with previous
+            monthData.days.forEach((dayData) => {
+              if (currentDay == dayData.day) { 
+                dayData.dAmount = currentDayAmount
+              } else {
+                // add new day data
+                let newDay = {
+                  day: currentDay,
+                  dAmount: currentDayAmount
+                }
+                monthData.days.push(newDay)
+              }
+            })
+          } else {
+            // add new month data
+            let newMonth = {
+              month: currentMonth,
+              mAmount: currentMonthAmount,
+              days: [
+                {
+                  day: currentDay,
+                  dAmount: currentDayAmount
+                }
+              ]
+            }
+            donationsData[donationsData.length - 1].months.push(newMonth)
+          }
+        })
+      } else {
+        console.log("New Year")
+        donationData = {
+          year: currentYear,
+          yAmount: currentYearAmount,
+          months: [
+            {
+              month: currentMonth,
+              mAmount: currentMonthAmount,
+              days: [
+                {
+                  day: currentDay,
+                  dAmount: currentDayAmount
+                }
+              ]
+            }
+          ]
+        }
+        donationsData.push(donationData)  
+      }
+    // }
+    // donationCounter++
+    // console.log(donationCounter)
+  })
+  // donationsData[donationsData.length - 1].months.pop()
+  donationsData.forEach((data) => {
+    data.months.pop()
+  })
+
+  res.status(200).send(donationsData)
+
 }
 
 // all approved projects
@@ -63,7 +319,8 @@ export const getAllProjects = async (req, res) => {
     },
     {
       $match: {
-        approval: 'Approved',
+        projectApproval1: 'Approved',
+        projectApproval2: 'Approved',
       },
     },
     { $sort: { updatedAt: -1 } },
@@ -71,8 +328,52 @@ export const getAllProjects = async (req, res) => {
   res.status(200).send(joinedData)
 }
 
-// get project by category
+export const showNews = async (req, res) => {
+  const { id } = req.params
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ error: 'No such project' })
+  }
 
+  let news = 'Visible'
+  const project = await ProjectModel.findOneAndUpdate(
+    { _id: id },
+    {
+      ...req.body,
+      news: news,
+    },
+  )
+  // console.log(project)
+
+  if (!project) {
+    return res.status(404).json({ error: 'No such project' })
+  }
+
+  res.status(200).json(project)
+}
+
+export const hideNews = async (req, res) => {
+  const { id } = req.params
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ error: 'No such project' })
+  }
+
+  let news = 'Hidden'
+  const project = await ProjectModel.findOneAndUpdate(
+    { _id: id },
+    {
+      ...req.body,
+      news: news,
+    },
+  )
+  console.log(project)
+  if (!project) {
+    return res.status(404).json({ error: 'No such project' })
+  }
+
+  res.status(200).json(project)
+}
+
+// get project by category
 export const getProjectsByCategory = async (req, res) => {
   const { id } = req.params
   let joinedData = await ProjectModel.aggregate([
@@ -86,7 +387,8 @@ export const getProjectsByCategory = async (req, res) => {
     },
     {
       $match: {
-        approval: 'Approved',
+        projectApproval1: 'Approved',
+        projectApproval2: 'Approved',
         status: 'Open',
         category: id,
       },
@@ -118,7 +420,7 @@ export const searchProjects = async (req, res) => {
   res.status(200).send(joinedData)
 }
 
-export const getPendingProjects = async (req, res) => {
+export const getPendingProjects1 = async (req, res) => {
   let joinedData = await ProjectModel.aggregate([
     {
       $lookup: {
@@ -130,7 +432,27 @@ export const getPendingProjects = async (req, res) => {
     },
     {
       $match: {
-        approval: 'Pending',
+        projectApproval1: 'Pending',
+      },
+    },
+    { $sort: { updatedAt: -1 } },
+  ])
+  res.status(200).send(joinedData)
+}
+
+export const getPendingProjects2 = async (req, res) => {
+  let joinedData = await ProjectModel.aggregate([
+    {
+      $lookup: {
+        from: 'fundraisers',
+        localField: 'fundraiser',
+        foreignField: '_id',
+        as: 'details',
+      },
+    },
+    {
+      $match: {
+        projectApproval2: 'Pending',
       },
     },
     { $sort: { updatedAt: -1 } },
@@ -207,7 +529,9 @@ export const createProject = async (req, res) => {
   let docs = []
   let status = 'Pending'
   let request = 'Create'
-  let approval = 'Pending'
+  let projectApproval1 = 'Pending'
+  let projectApproval2 = "waiting"
+  let fundraiserRequestedAt = Date.now()
 
   uploadedFiles.map((data) => {
     if (data.slice(0, 3) == 'img') {
@@ -234,8 +558,10 @@ export const createProject = async (req, res) => {
       category,
       fundraiser,
       status,
-      approval,
+      projectApproval1,
       request,
+      projectApproval2,
+      fundraiserRequestedAt
     })
     console.log('project ADDED')
     // Reset variables
@@ -300,14 +626,40 @@ export const updateProject = async (req, res) => {
 
   let status = 'Pending'
   let request = 'Update'
-  let approval = 'Pending'
+  let projectApproval1 = 'Pending'
+  let projectApproval2 = "waiting"
+  let fundraiserRequestedAt = Date.now()
   const project = await ProjectModel.findOneAndUpdate(
     { _id: id },
     {
       ...req.body,
       status: status,
       request: request,
-      approval: approval,
+      projectApproval1: projectApproval1,
+      projectApproval2: projectApproval2,
+      fundraiserRequestedAt: fundraiserRequestedAt
+    },
+  )
+
+  if (!project) {
+    return res.status(404).json({ error: 'No such project' })
+  }
+
+  res.status(200).json(project)
+}
+
+export const updateNews = async (req, res) => {
+  const { id } = req.params
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ error: 'No such project' })
+  }
+
+  let news = 'Visible'
+  const project = await ProjectModel.findOneAndUpdate(
+    { _id: id },
+    {
+      ...req.body,
+      news: news,
     },
   )
 
@@ -323,12 +675,25 @@ export const updateProjectFromApp = async (req, res) => {
   if (!mongoose.Types.ObjectId.isValid(req.body.id)) {
     return res.status(404).json({ error: 'No such project id' })
   }
-  const project = await ProjectModel.findOneAndUpdate(
-    { _id: req.body.id },
-    {
-      ...req.body,
-    },
-  )
+  let project
+  if (req.body.status == 'Completed') {
+    project = await ProjectModel.findOneAndUpdate(
+      { _id: req.body.id },
+      {
+        ...req.body,
+        projectCompletedAt: Date.now(),
+        news: 'Hidden'
+      },
+    )
+  } else {
+    project = await ProjectModel.findOneAndUpdate(
+      { _id: req.body.id },
+      {
+        ...req.body,
+      },
+    )
+  }
+  
 
   if (!project) {
     return res.status(404).json({ error: 'No such project data' })
@@ -363,20 +728,48 @@ export const closeProject = async (req, res) => {
 }
 
 // approve pending project
-export const approvePendingProject = async (req, res) => {
+export const approvePendingProject1 = async (req, res) => {
   const { id } = req.params
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ error: 'No such project' })
   }
-  let approval = 'Approved'
-  let status = 'Open'
-  let approved = new Date()
+  let projectApproval1 = 'Approved'
+  // let status = 'Open'
+  let adminRequestedAt = Date.now()
+  let adminRequestType = "Approve"
+  let projectApproval2 = "Pending"
   const project = await ProjectModel.findOneAndUpdate(
     { _id: id },
     {
-      approval: approval,
+      projectApproval1: projectApproval1,
+      // status: status,
+      adminRequestedAt: adminRequestedAt,
+      adminRequestType: adminRequestType,
+      projectApproval2: projectApproval2
+    },
+  )
+
+  if (!project) {
+    return res.status(404).json({ error: 'No such project' })
+  }
+
+  res.status(200).json(project)
+}
+
+export const approvePendingProject2 = async (req, res) => {
+  const { id } = req.params
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ error: 'No such project' })
+  }
+  let projectApproval2 = 'Approved'
+  let status = 'Open'
+  let projectApprovedAt = Date.now()
+  const project = await ProjectModel.findOneAndUpdate(
+    { _id: id },
+    {
+      projectApproval2: projectApproval2,
       status: status,
-      approved: approved,
+      projectApprovedAt: projectApprovedAt,
     },
   )
 
@@ -568,18 +961,48 @@ export const approvePendingProject = async (req, res) => {
 }
 
 // reject pending project
-export const rejectPendingProject = async (req, res) => {
+export const rejectPendingProject1 = async (req, res) => {
   const { id } = req.params
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ error: 'No such project' })
   }
-  let approval = 'Rejected'
-  let status = 'Closed'
+  let projectApproval1 = 'Rejected'
+  // let status = 'Closed'
+  let adminRequestType = "Reject"
+  let adminRequestedAt = Date.now()
+  let projectApproval2 = "Pending"
   const project = await ProjectModel.findOneAndUpdate(
     { _id: id },
     {
-      approval: approval,
+      projectApproval1: projectApproval1,
+      // status: status,
+      adminRequestType: adminRequestType,
+      adminRequestedAt: adminRequestedAt,
+      projectApproval2: projectApproval2
+    },
+  )
+
+  if (!project) {
+    return res.status(404).json({ error: 'No such project' })
+  }
+
+  res.status(200).json(project)
+}
+
+export const rejectPendingProject2 = async (req, res) => {
+  const { id } = req.params
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ error: 'No such project' })
+  }
+  let projectApproval2 = 'Rejected'
+  let status = 'Closed'
+  let projectRejectedAt = Date.now()
+  const project = await ProjectModel.findOneAndUpdate(
+    { _id: id },
+    {
+      projectApproval2: projectApproval2,
       status: status,
+      projectRejectedAt: projectRejectedAt
     },
   )
 

@@ -4,10 +4,12 @@ import { Box, Button, Card, TextField, Typography } from '@mui/material'
 import { Link, useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../context/AuthContext'
 import axios from 'axios'
+import { useTranslation } from 'react-i18next'
 
 export const FundraiserProfileComp = (props) => {
   const navigate = useNavigate()
 
+  const {t} = useTranslation()
   
   const { currentUser } = useContext(AuthContext)
   const [user, setUser] = useState()
@@ -82,7 +84,7 @@ export const FundraiserProfileComp = (props) => {
         <Card className="profile-picture">
           <div className="img-text-wrapper">
             <Typography variant="h6" className="title">
-              Profile Picture
+             {t('fundraiser:profile.1')}
             </Typography>
             <Link
               to={
@@ -112,7 +114,7 @@ export const FundraiserProfileComp = (props) => {
                   opacity: '0',
                   cursor: 'pointer',
                 },
-              }}>Change Profile
+              }}>{t('fundraiser:profile.2')}
             <input
                 onChange={handleImageChange}
                 id="image-input"
@@ -122,17 +124,17 @@ export const FundraiserProfileComp = (props) => {
                 name="profile"
               />
             </Button>
-            <Button onClick={handleImageDelete}>Remove Profile</Button>
+            <Button onClick={handleImageDelete}>{t('fundraiser:profile.3')}</Button>
           </div>
         </Card>
         <Card className="basic-info">
           <Typography variant="h6" className="title">
-            Basic information
+            {t('fundraiser:profile.4')}
           </Typography>
           <div className="text-field-wrapper">
-            <TextField value={inputs.name} label="Name" name="name" />
-            <TextField value={inputs.email} label="Email" name="email" />
-            <TextField label="Phone" name="phone" />
+            <TextField value={inputs.name} label={t('fundraiser:profile.5')} name="name" />
+            <TextField value={inputs.email} label={t('fundraiser:profile.6')} name="email" />
+            <TextField label={t('fundraiser:profile.7')} name="phone" />
           </div>
         </Card>
       </div>
@@ -146,14 +148,14 @@ export const FundraiserProfileComp = (props) => {
         }}
       >
         <Button onClick={handleSave} className="save" variant="contained">
-          Save
+          {t('btn.2')}
         </Button>
         <Button
           className="cancel"
           variant="contained"
           onClick={() => navigate('/fundraiser')}
         >
-          Cancel
+          {t('btn.3')}
         </Button>
       </Box>
     </div>

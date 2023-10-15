@@ -3,6 +3,7 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import { MessagesComp } from './../../components/common/message/MessagesComp';
+import { useTranslation } from 'react-i18next';
 
 const sender = [
   {
@@ -78,7 +79,10 @@ const sender = [
 ]
 
 export const UserMessages = () => {
-  const navigate = useNavigate()   
+  const navigate = useNavigate()
+  
+  const { t } = useTranslation()
+  
   return (
     <Box sx={{ minHeight: '100vh' }} className="container-wrapper">
       <div className="container">
@@ -86,7 +90,7 @@ export const UserMessages = () => {
           sx={{ display: 'flex', flexDirection: 'column-reverse', gap: '20px' }}
         >
           <Typography variant="h5" sx={{ fontWeight: '700', pb: '50px' }}>
-            Messages
+            {t('title.4')}
           </Typography>
           <Button
             onClick={() => navigate('/admin')}
@@ -100,7 +104,7 @@ export const UserMessages = () => {
             }}
             startIcon={<ArrowBackIcon />}
           >
-            Back
+            {t('btn.1')}
           </Button>
         </Box>
         <MessagesComp sender={sender} />

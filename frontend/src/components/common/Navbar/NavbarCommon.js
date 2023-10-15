@@ -25,7 +25,9 @@ import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { AuthContext } from './../../../context/AuthContext'
 import axios from 'axios'
 import { useLocation } from 'react-router-dom'
-
+import { useTranslation } from 'react-i18next'
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
+import LanguageIcon from '@mui/icons-material/Language'
 export const NavbarCommon = (props) => {
   const location = useLocation()
   const {
@@ -37,12 +39,15 @@ export const NavbarCommon = (props) => {
     getAdminNotifications,
     adminNotifications,
     getFundraiserNotifications,
-    fundraiserNotifications
+    fundraiserNotifications,
   } = useContext(AuthContext)
   const navigate = useNavigate()
 
   useEffect(() => {
-    if (location.pathname == '/user-notifications' || location.pathname == '/fundraiser-notifications') {
+    if (
+      location.pathname == '/user-notifications' ||
+      location.pathname == '/fundraiser-notifications'
+    ) {
       markUserNotificationsAsSeen()
     }
   }, [])
@@ -54,7 +59,7 @@ export const NavbarCommon = (props) => {
   } else if (currentUser.role == 'Admin') {
     getAdminNotifications()
   }
-  
+
   let notificationCounter = 0
   if (currentUser.role == 'Admin') {
     notificationCounter = adminNotifications
@@ -84,6 +89,19 @@ export const NavbarCommon = (props) => {
 
   const handleClose = () => {
     setAnchorEl(null)
+  }
+
+  const { t, i18n } = useTranslation()
+
+  function clickLanguage(lang) {
+    i18n.changeLanguage(lang)
+  }
+
+  const handleClick2 = (event) => {
+    setAnchorEl2(event.currentTarget)
+  }
+  const handleClose2 = () => {
+    setAnchorEl2(null)
   }
 
   return (
@@ -122,7 +140,7 @@ export const NavbarCommon = (props) => {
                     // badgeContent={1000}
                     max={99}
                   >
-                    <MailOutlineOutlinedIcon />
+                    <MailOutlineOutlinedIcon className="mail-icon" />
                   </Badge>
                 </IconButton>
                 <IconButton
@@ -134,9 +152,48 @@ export const NavbarCommon = (props) => {
                     badgeContent={notificationCounter}
                     max={999}
                   >
-                    <NotificationsOutlinedIcon />
+                    <NotificationsOutlinedIcon className="notification-icon" />
                   </Badge>
                 </IconButton>
+                {/* Language select */}
+                <IconButton sx={{ fontWeight: '400' }} onClick={handleClick2}>
+                  <LanguageIcon className="language-icon" />
+                </IconButton>
+                <Box>
+                  <Menu
+                    id="basic-menu1"
+                    anchorEl={anchorEl2}
+                    open={open2}
+                    onClose={handleClose2}
+                    MenuListProps={{
+                      'aria-labelledby': 'basic-button1',
+                    }}
+                    sx={{
+                      zIndex: '999999',
+                      '>*': {
+                        fontWeight: '400',
+                        fontSize: '14px',
+                      },
+                      a: {
+                        textDecoration: 'none',
+                        color: 'black',
+                      },
+                      '.active': {
+                        borderBottom: '3px solid #029a5b',
+                        '>*': {
+                          color: '#029a5b',
+                        },
+                      },
+                    }}
+                  >
+                    <Box onClick={() => clickLanguage('en')}>
+                      <MenuItem onClick={handleClose2}>English</MenuItem>
+                    </Box>
+                    <Box onClick={() => clickLanguage('am')}>
+                      <MenuItem onClick={handleClose2}>አማርኛ</MenuItem>
+                    </Box>
+                  </Menu>
+                </Box>
                 {/* my-account wrapper */}
                 <Box className="my-account-wrapper">
                   {/* my account */}
@@ -149,7 +206,8 @@ export const NavbarCommon = (props) => {
                   >
                     <Tooltip title="My Account">
                       {currentUser.image != '' ? (
-                        <img className="my-account-avatar"
+                        <img
+                          className="my-account-avatar"
                           src={`http://localhost:5000/api/uploads/${currentUser.image}`}
                         />
                       ) : (
@@ -195,11 +253,15 @@ export const NavbarCommon = (props) => {
                     <span className="role"> - {currentUser.role}</span>
                   </Box>
                   <NavLink to={props.dashboard}>
-                    <MenuItem onClick={handleClose1}>Dashboard</MenuItem>
+                    <MenuItem onClick={handleClose1}>
+                      {t('navlinks.12')}
+                    </MenuItem>
                   </NavLink>
 
                   <NavLink to={props.profile}>
-                    <MenuItem onClick={handleClose1}>My Profile</MenuItem>
+                    <MenuItem onClick={handleClose1}>
+                      {t('navlinks.20')}
+                    </MenuItem>
                   </NavLink>
 
                   <NavLink
@@ -213,7 +275,9 @@ export const NavbarCommon = (props) => {
                         })
                     }}
                   >
-                    <MenuItem onClick={handleClose1}>Logout</MenuItem>
+                    <MenuItem onClick={handleClose1}>
+                      {t('navlinks.21')}
+                    </MenuItem>
                   </NavLink>
                 </Menu>
 

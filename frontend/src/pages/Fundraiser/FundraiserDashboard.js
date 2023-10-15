@@ -3,12 +3,17 @@ import { DashboardCard } from '../../components/common/Card/DashboardCard'
 import { Box, Typography } from '@mui/material'
 import { AuthContext } from '../../context/AuthContext'
 import axios from 'axios'
+import { useTranslation } from 'react-i18next'
+import { ReportsCompFundraiser } from '../../components/reports/ReportsCompFundraiser'
 
 export const FundraiserDashboard = () => {
   const { currentUser, fundraiserNotifications } = useContext(AuthContext)
   let profileImage = (currentUser.image != '') ? `http://localhost:5000/api/uploads/${currentUser.image}` : '/images/profile-icon.png'
   
   const [donations, setDonations] = useState([])
+
+  const { t } = useTranslation()
+  
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -50,60 +55,60 @@ export const FundraiserDashboard = () => {
   
   const cardData = [
     {
-      text1: 'Welcome back!',
-      text2: 'Ubuntu Dashboard',
+      text1: t('dashboard.1.1'),
+      text2: t('dashboard.1.2'),
       img: profileImage,
       text3: currentUser.name,
-      text4: 'Fundraiser',
-      btn: 'View Profile',
+      text4: t('dashboard.1.4'),
+      btn: t('dashboard.1.6'),
       path: '/fundraiser-profile'
     },
     {
-      text1: 'Messages',
-      text2: 'List of all my messages',
+      text1: t('dashboard.2.1'),
+      text2: t('dashboard.2.2'),
       img: '/images/message-icon.png',
       text3: '',
-      text4: 'Latest messages',
-      btn: 'View Messages',
+      text4: t('dashboard.2.3'),
+      btn: t('dashboard.2.4'),
       path: '/fundraiser-messages'
     },
     {
-      text1: 'Notifications',
-      text2: 'List of all notifications',
+      text1: t('dashboard.3.1'),
+      text2: t('dashboard.3.2'),
       img: '/images/notification-icon.png',
       text3: fundraiserNotifications,
-      text4: 'Latest notifications',
-      btn: 'View Notifications',
+      text4: t('dashboard.3.3'),
+      btn: t('dashboard.3.4'),
       path: '/fundraiser-notifications'
     },
   ]
   const cardData2 = [
     {
-      text1: 'My Donations',
-      text2: 'Donation Transactions',
+      text1: t('dashboard.4.1'),
+      text2: t('dashboard.4.2'),
       img: '/images/donation-icon.png',
       text3: donations,
-      text4: 'Total donations',
-      btn: 'View Donations',
+      text4: t('dashboard.4.3'),
+      btn: t('dashboard.4.4'),
       path: '/fundraiser-donations'
     },
     {
-      text1: 'My Projects',
-      text2: 'List of all my projects',
+      text1: t('dashboard.5.1'),
+      text2: t('dashboard.5.2'),
       img: '/images/project-icon.png',
       text3: projects,
-      text4: 'Total projects',
-      btn: 'View Projects',
+      text4: t('dashboard.5.3'),
+      btn: t('dashboard.5.4'),
       path: '/fundraiser-projects'
     },
   ]
   return (
     <Box sx={{ minHeight: '100vh'}} className="container-wrapper">
       <div className="container">
-        <Typography variant="h5" sx={{ fontWeight: '700', pb: '50px' }}>
-          Fundraiser Dashboard
+        <Typography variant="h5" sx={{ fontWeight: '700', pb: '0px' }}>
+        {t('dashboard.title.2')}
         </Typography>
-        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+        {/* <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
         <Box
           sx={{
             display: 'flex',
@@ -151,7 +156,8 @@ export const FundraiserDashboard = () => {
             )
           })}
         </Box>
-       </Box>
+       </Box> */}
+        <ReportsCompFundraiser />
       </div>
     </Box>
   )

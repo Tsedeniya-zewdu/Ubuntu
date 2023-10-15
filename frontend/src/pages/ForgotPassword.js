@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom'
 import { Alert, FormControl, FormControlLabel, Radio, RadioGroup } from '@mui/material'
 import { AuthContext } from './../context/AuthContext'
 import axios from 'axios'
+import { useTranslation } from 'react-i18next'
 
 export const ForgotPassword = () => {
   // For showing loging Errors
@@ -16,6 +17,8 @@ export const ForgotPassword = () => {
 
   // For redirecting
   const navigate = useNavigate()
+
+  const {t} = useTranslation()
 
   const [inputs, setInputs] = useState({
     email: '',
@@ -66,7 +69,7 @@ export const ForgotPassword = () => {
             <img src="/images/logo.png" alt="logo" />
           </Box>
           <Typography component="h1" variant="h6" sx={{textAlign: 'center', py: '20px', fontWeight: '400'}}>
-            Please Select your account type and enter your email, password reset link will be sent to you!
+            {t('forgot.1')}
           </Typography>
           <Box component="form" sx={{ mt: 1 }}>
           <FormControl>
@@ -83,14 +86,14 @@ export const ForgotPassword = () => {
                     <FormControlLabel
                       value="User"
                       control={<Radio />}
-                      label="User"
+                      label={t('forgot.2')}
                     />{' '}
                   </Box>
                   <Box className="account-type-box">
                     <FormControlLabel
                       value="Fundraiser"
                       control={<Radio />}
-                      label="Fundraiser"
+                      label={t('forgot.3')}
                     />
                   </Box>{' '}
                 </Box>
@@ -101,7 +104,7 @@ export const ForgotPassword = () => {
               required
               fullWidth
               id="email"
-              label="Email"
+              label={t('forgot.4')}
               name="email"
               type='email'
               autoComplete="email"
@@ -115,7 +118,7 @@ export const ForgotPassword = () => {
               sx={{ mt: 3, mb: 2, textTransform: 'capitalize' }}
               onClick={handleSubmit}
             >
-              Get Password Reset Link
+              {t('forgot.5')}
             </Button>
             <Grid container>
               {showErr && (

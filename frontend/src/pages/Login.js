@@ -16,6 +16,7 @@ import {
   RadioGroup,
 } from '@mui/material'
 import { AuthContext } from './../context/AuthContext'
+import { useTranslation } from 'react-i18next'
 
 export const Login = () => {
   // For holding inputs data
@@ -65,6 +66,8 @@ export const Login = () => {
     }
   }, [currentUser])
 
+  const {t} = useTranslation()
+
   return (
     <div>
       <Container component="main" maxWidth="xs">
@@ -86,7 +89,7 @@ export const Login = () => {
             <img src="/images/logo.png" alt="logo" />
           </Button>
           <Typography component="h1" variant="h5">
-            Sign in
+            {t('login.1')}
           </Typography>
           <Box component="form" sx={{ mt: 1 }}>
             <FormControl>
@@ -103,14 +106,14 @@ export const Login = () => {
                     <FormControlLabel
                       value="User"
                       control={<Radio />}
-                      label="User"
+                      label={t('login.2')}
                     />{' '}
                   </Box>
                   <Box className="account-type-box">
                     <FormControlLabel
                       value="Fundraiser"
                       control={<Radio />}
-                      label="Fundraiser"
+                      label={t('login.3')}
                     />
                   </Box>{' '}
                 </Box>
@@ -121,7 +124,7 @@ export const Login = () => {
               required
               fullWidth
               id="email"
-              label="Email Address"
+              label={t('login.4')}
               name="email"
               autoComplete="email"
               autoFocus
@@ -132,7 +135,7 @@ export const Login = () => {
               required
               fullWidth
               name="password"
-              label="Password"
+              label={t('login.5')}
               type="password"
               id="password"
               autoComplete="current-password"
@@ -145,18 +148,18 @@ export const Login = () => {
               sx={{ mt: 3, mb: 2 }}
               onClick={handleSubmit}
             >
-              Sign In
+              {t('login.6')}
             </Button>
             <Grid container>
               <Grid item xs>
                 <Link variant="body2" sx={{ '>a': { color: '#029a5b' } }}>
-                  <NavLink to="/forgot">Forgot password?</NavLink>
+                  <NavLink to="/forgot">{ t('login.7')}</NavLink>
                 </Link>
               </Grid>
               <Grid item>
                 <Typography variant="body2" sx={{ '>a': { color: '#029a5b' } }}>
                   <NavLink to="/register">
-                    {"Don't have an account? Sign Up"}
+                    {t('login.8')}
                   </NavLink>
                 </Typography>
               </Grid>
@@ -176,9 +179,9 @@ export const Login = () => {
           align="center"
           sx={{ mt: 5, '>*': { color: 'inherit' } }}
         >
-          {'Copyright © '}
+          { t('login.10')}{' ©  '}
 
-          <NavLink to="/">Ubuntu </NavLink>
+          <NavLink to="/">{t('login.9')} </NavLink>
           {new Date().getFullYear()}
           {'.'}
         </Typography>

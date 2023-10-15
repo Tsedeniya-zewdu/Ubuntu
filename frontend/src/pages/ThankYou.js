@@ -5,6 +5,7 @@ import Container from '@mui/material/Container'
 import { NavLink, useNavigate, useParams } from 'react-router-dom'
 import { Button } from '@mui/material'
 import axios from 'axios'
+import { t } from 'i18next'
 
 export const ThankYou = () => {
   const {txRef} = useParams()
@@ -36,10 +37,10 @@ export const ThankYou = () => {
             <img src="/images/logo.png" alt="logo" />
           </Button>
           <Typography sx={{py: '15px', color: '#029a5b'}} component="h1" variant="h5">
-           Donation Successful
+           {t('thankyou.1')}
           </Typography>
           <Typography component="h1" variant="h5">
-           Thank You for your Support!
+           {t('thankyou.2')}
           </Typography>
           <Box component="form" noValidate sx={{ mt: 3 }}>
 
@@ -50,23 +51,10 @@ export const ThankYou = () => {
               sx={{ mt: 3, mb: 2 }}
               onClick={()=> navigate('/')}
             >
-              Back to Home
+             {t('thankyou.3')}
             </Button>
           </Box>
         </Box>
-
-        <Typography
-          variant="body2"
-          color="text.secondary"
-          align="center"
-          sx={{ mt: 5, '>*': { color: 'inherit' } }}
-        >
-          {'Copyright © '}
-
-          <NavLink to="/">Ubuntu </NavLink>
-          {new Date().getFullYear()}
-          {'.'}
-        </Typography>
       </Container>
     </Box>
   )

@@ -6,6 +6,7 @@ import {
   getProjectDonations,
   getUserDonations,
   verifyDonation,
+    getDonationGraphData,
 } from '../controllers/donation.js'
 
 const router = express.Router()
@@ -15,6 +16,9 @@ const router = express.Router()
 
 // get donations for project
 router.get('/project/:id', getProjectDonations)
+
+// get donations graph data 
+router.get('/project/donations/:id', getDonationGraphData)
 
 // get donations for user
 router.get('/user/:id', getUserDonations)

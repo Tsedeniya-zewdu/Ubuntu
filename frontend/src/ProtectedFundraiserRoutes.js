@@ -3,40 +3,46 @@ import { Outlet, Navigate } from 'react-router-dom'
 import { FooterCommon } from './components/common/Footer/FooterCommon'
 import { AuthContext } from './context/AuthContext'
 import { NavbarCommon } from './components/common/Navbar/NavbarCommon'
+import { useTranslation } from 'react-i18next'
 
-const pages = [
-  {
-    title: 'Home',
-    path: '/',
-  },
-  {
-    title: 'Dashboard',
-    path: '/fundraiser',
-  },
-  {
-    title: 'About',
-    path: '/about',
-  },
-  {
-    title: 'Projects',
-    path: '/project/All',
-  },
-  {
-    title: 'News',
-    path: '/news',
-  },
-  {
-    title: 'My Projects',
-    path: '/fundraiser-projects',
-  },
-  {
-    title: 'My Donations',
-    path: '/fundraiser-donations',
-  },
-]
+
 
 export const ProtectedFundraiserRoutes = () => {
   const { currentUser } = useContext(AuthContext)
+
+  const {t} = useTranslation()
+
+  const pages = [
+    {
+      title: t('navlinks.1'),
+      path: '/',
+    },
+    {
+      title: t('navlinks.12'),
+      path: '/fundraiser',
+    },
+    {
+      title: t('navlinks.2'),
+      path: '/about',
+    },
+    {
+      title: t('navlinks.3'),
+      path: '/project/All',
+    },
+    {
+      title: t('navlinks.4'),
+      path: '/news',
+    },
+    {
+      title: t('navlinks.13'),
+      path: '/fundraiser-projects',
+    },
+    {
+      title: t('navlinks.14'),
+      path: '/fundraiser-donations',
+    },
+  ]
+
   return (
     <div>
       {currentUser && currentUser.role == 'Fundraiser' ? (

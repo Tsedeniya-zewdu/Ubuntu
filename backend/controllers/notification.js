@@ -14,9 +14,9 @@ export const getUserNotification = async (req, res) => {
     },
     {
       $match: {
-        approval: 'Approved',
+        projectApproval2: 'Approved',
         status: 'Open',
-        approved: { $gt: new Date(req.body.login) },
+        projectApprovedAt: { $gt: new Date(req.body.login) },
       },
     },
     { $sort: { updatedAt: -1 } },
@@ -36,10 +36,10 @@ export const getUserNotificationHistory = async (req, res) => {
     },
     {
       $match: {
-        approval: 'Approved',
+        projectApproval2: 'Approved',
         status: 'Open',
         createdAt: { $gt: new Date('approved') },
-        approved: { $lt: new Date(req.body.login) },
+        projectApprovedAt: { $lt: new Date(req.body.login) },
       },
     },
     { $sort: { updatedAt: -1 } },
@@ -47,7 +47,7 @@ export const getUserNotificationHistory = async (req, res) => {
   res.status(200).send(joinedData)
 }
 
-export const getAdminNotification = async (req, res) => {
+export const getAdminNotification1 = async (req, res) => {
   let joinedData = await ProjectModel.aggregate([
     {
       $lookup: {
@@ -59,7 +59,7 @@ export const getAdminNotification = async (req, res) => {
     },
     {
       $match: {
-        approval: 'Pending',
+        projectApproval1: 'Pending',
       },
     },
     { $sort: { updatedAt: -1 } },
@@ -67,7 +67,7 @@ export const getAdminNotification = async (req, res) => {
   res.status(200).send(joinedData)
 }
 
-export const getAdminNotificationHistory = async (req, res) => {
+export const getAdminNotification2 = async (req, res) => {
   let joinedData = await ProjectModel.aggregate([
     {
       $lookup: {
@@ -79,7 +79,47 @@ export const getAdminNotificationHistory = async (req, res) => {
     },
     {
       $match: {
-        approval: 'Approved',
+        projectApproval2: 'Pending',
+      },
+    },
+    { $sort: { updatedAt: -1 } },
+  ])
+  res.status(200).send(joinedData)
+}
+
+export const getAdminNotificationHistory1 = async (req, res) => {
+  let joinedData = await ProjectModel.aggregate([
+    {
+      $lookup: {
+        from: 'fundraisers',
+        localField: 'fundraiser',
+        foreignField: '_id',
+        as: 'details',
+      },
+    },
+    {
+      $match: {
+        projectApproval1: 'Approved',
+      },
+    },
+    { $sort: { updatedAt: -1 } },
+  ])
+  res.status(200).send(joinedData)
+}
+
+export const getAdminNotificationHistory2 = async (req, res) => {
+  let joinedData = await ProjectModel.aggregate([
+    {
+      $lookup: {
+        from: 'fundraisers',
+        localField: 'fundraiser',
+        foreignField: '_id',
+        as: 'details',
+      },
+    },
+    {
+      $match: {
+        projectApproval2: 'Approved',
       },
     },
     { $sort: { updatedAt: -1 } },

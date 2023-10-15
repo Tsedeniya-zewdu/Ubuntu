@@ -110,7 +110,7 @@
 
     .right-side-wrapper {
         display: flex;
-        gap: 20px;
+        gap: 10px;
         .notification {
             max-width: 50px;
             padding: 0;
@@ -199,4 +199,13 @@
     }
 
 
+}
+
+.notification-icon, .mail-icon, .language-icon {
+    width: 25px !important;
+    height: 25px !important;
+}
+.my-account-avatar {
+    width: 25px !important; 
+    height: 25px !important;
 }

@@ -11,9 +11,11 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime'
 import { StyledText1 } from './Common'
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
 import { useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 
 export const CustomCard = (props) => {
   const navigate = useNavigate()
+  const {t} = useTranslation()
   return (
     <Card sx={{ maxWidth: { xs: 'none', sm: 380 }, maxHeight: 567 }} onClick={()=>navigate(`/projects/${props.path}`)}>
       <CardActionArea>
@@ -125,7 +127,7 @@ export const CustomCard = (props) => {
                 }}
               >
                 {props.days}
-                <span>Days Left</span>
+                <span>{t('project:card.1')}</span>
               </Typography>
             </Box>
           </Box>
@@ -162,7 +164,7 @@ export const CustomCard = (props) => {
                   },
                 }}
               >
-                Raised<span>{props.raised} ETB</span>
+                {t('project:card.2')}<span>{props.raised} {t('project:card.3')}</span>
               </Typography>
             </Box>
             <Typography
@@ -222,7 +224,7 @@ export const CustomCard = (props) => {
                   },
                 }}
               >
-                Goal<span>{props.goal} ETB</span>
+                {t('project:card.4')}<span>{props.goal} {t('project:card.3')}</span>
               </Typography>
             </Box>
             <Box
@@ -237,7 +239,7 @@ export const CustomCard = (props) => {
                   color: "#029a5b"
                 }}
               >
-                Explore
+                {t('project:card.5')}
               </StyledText1>
               <ArrowForwardIosIcon sx={{ width: '12px', height: '12px', color: "#029a5b" }} />
             </Box>

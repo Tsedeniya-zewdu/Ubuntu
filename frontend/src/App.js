@@ -53,6 +53,8 @@ import { Error } from './pages/Error'
 import { AdminLogin } from './pages/AdminLogin'
 import { Terms } from './pages/Terms'
 import { NewsDetails } from './pages/NewsDetails'
+import { AdminNews } from './pages/Admin/AdminNews'
+import { AdminCreateNews } from './pages/Admin/AdminCreateNews'
 
 const theme = createTheme({
   palette: {
@@ -156,6 +158,8 @@ function App() {
             <Route path="/admin-users" element={<AdminUsers />} />
             <Route path="/admin-messages" element={<AdminMessages />} />
             <Route path="/admin-reports" element={<AdminReports />} />
+            <Route path="/admin-news" element={<AdminNews />} />
+            <Route path="/admin-news-create/:pid" element={<AdminCreateNews />} />
           </Route>
         </Routes>
       </Box>

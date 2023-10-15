@@ -8,7 +8,7 @@ import {
   validateUserLogin,
 } from '../models/User.js'
 import { FundraiserModel } from '../models/fundraiser.js'
-import { AdminModel } from '../models/admin.js'
+import { AdminModel, validateAdminSignup } from '../models/admin.js'
 import { TokenModel } from './../models/token.js'
 import Joi from 'joi'
 
@@ -17,9 +17,14 @@ export const currentUser = async (req, res) => {
 }
 
 export const register = async (req, res) => {
-  const { error } = validateUserSignup(req.body) // validate user inputs
-  if (error) return res.status(400).send(error.details[0].message)
-
+  if (req.body.role == 'User' || req.body.role == 'Fundraiser') {
+    const { error } = validateUserSignup(req.body) // validate user inputs
+    if (error) return res.status(400).send(error.details[0].message)
+  } 
+  if (req.body.role == 'Admin') {
+    const { error } = validateAdminSignup(req.body) // validate user inputs
+    if (error) return res.status(400).send(error.details[0].message)
+  }
   let user = await UserModel.findOne({ email: req.body.email }) // check registered user with this email
   let fundraiser = await FundraiserModel.findOne({ email: req.body.email }) // check registered fundraiser with this email
   let admin = await AdminModel.findOne({ email: req.body.email }) // check registered admin with this email
@@ -41,6 +46,7 @@ export const register = async (req, res) => {
     image: 'profile-icon.png',
     login: new Date(),
     verified: false,
+    type: req.body.type
   }
   if (req.body.role == 'User') {
     user = new UserModel(data) // new user
@@ -433,7 +439,7 @@ export const register = async (req, res) => {
 
     res
       .header('x-auth-token', token)
-      .send(_.pick(admin, ['_id', 'name', 'email', 'role', 'image'])) // send jwt token to client
+      .send(_.pick(admin, ['_id', 'name', 'type', 'email', 'role', 'image'])) // send jwt token to client
   }
 }
 
@@ -454,11 +460,11 @@ export const login = async (req, res) => {
     if (user.verified) {
       const token = user.generateAuthToken() // generate jwt token
 
-   return   res
+      return res
         .header('x-auth-token', token)
         .send(_.pick(user, ['_id', 'name', 'email', 'role', 'image', 'login'])) // send jwt token to client  // send token to client
     } else {
-    return  res.status(400).send('Your email is not verified!')
+      return res.status(400).send('Your email is not verified!')
     }
   } else if (fundraiser && req.body.role == 'Fundraiser') {
     const validPassword = await bcrypt.compare(
@@ -470,7 +476,7 @@ export const login = async (req, res) => {
     if (fundraiser.verified) {
       const token = fundraiser.generateAuthToken() // generate jwt token
 
-     return res
+      return res
         .header('x-auth-token', token)
         .send(
           _.pick(fundraiser, [
@@ -483,7 +489,7 @@ export const login = async (req, res) => {
           ]),
         ) // send jwt token to client  // send token to client
     } else {
-    return  res.status(400).send('Your email is not verified!')
+      return res.status(400).send('Your email is not verified!')
     }
   } else if (admin && req.body.role == 'Admin') {
     const validPassword = await bcrypt.compare(
@@ -494,11 +500,11 @@ export const login = async (req, res) => {
 
     const token = admin.generateAuthToken() // generate jwt token
 
-   return res
+    return res
       .header('x-auth-token', token)
-      .send(_.pick(admin, ['_id', 'name', 'email', 'role', 'image'])) // send jwt token to client  // send token to client
+      .send(_.pick(admin, ['_id', 'name', 'type', 'email', 'role', 'image'])) // send jwt token to client  // send token to client
   }
-  return res.status(400).send('Invalid email or password') 
+  return res.status(400).send('Invalid email or password')
 }
 
 export const logout = async (req, res) => {
@@ -559,7 +565,6 @@ export const emailValidation = async (req, res) => {
 }
 
 export const forgetPassword = async (req, res) => {
-
   const user = await UserModel.findOne({ email: req.body.email })
   const fundraiser = await FundraiserModel.findOne({ email: req.body.email })
   if (!user && !fundraiser)
@@ -759,7 +764,7 @@ export const forgetPassword = async (req, res) => {
     await sendEmail(fundraiser.email, 'Password reset', link)
     return res.status(200).send('password reset link sent successfully')
   }
-    return res.status(400).send("account with given email doesn't exist")
+  return res.status(400).send("account with given email doesn't exist")
 }
 
 export const passwordReset = async (req, res) => {

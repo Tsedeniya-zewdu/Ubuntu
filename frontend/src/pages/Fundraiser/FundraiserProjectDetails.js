@@ -5,11 +5,13 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { useParams } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 
 export const FundraiserProjectDetails = () => {
   const navigate = useNavigate()
   const { pid } = useParams()
   const [project, setProject] = useState()
+  const {t} = useTranslation()
 
   // Get a project data from db
   const fetchData = async () => {
@@ -50,10 +52,10 @@ useEffect(() => {
               }}
               startIcon={<ArrowBackIcon />}
             >
-              Back
+              {t('btn.1')}
             </Button>
             <Typography variant="h5" sx={{ fontWeight: '700', pb: '50px' }}>
-              Project Details
+              {t('title.7')}
             </Typography>
           </Box>
           <Button
@@ -61,7 +63,7 @@ useEffect(() => {
             variant="contained"
             sx={{ minWidth: '100px', textTransform: 'none' }}
           >
-            Edit
+            {t('btn.6')}
           </Button>
         </Box>
         <Box

@@ -3,9 +3,11 @@ import React from 'react'
 import { StyledButton } from './Common'
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
 import { useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 
 export const Promo = () => {
   const navigate = useNavigate()
+  const {t} = useTranslation()
   return (
     <Box
       sx={{
@@ -40,7 +42,7 @@ export const Promo = () => {
             fontWeight: '700',
           }}
         >
-          Get Funding and Support
+          {t('home:promo.1')}
         </Typography>
         <StyledButton
           variant="outlined"
@@ -60,7 +62,7 @@ export const Promo = () => {
             },
           }}
         >
-          Read More
+          {t('home:promo.2')}
         </StyledButton>
       </Box>
     </Box>

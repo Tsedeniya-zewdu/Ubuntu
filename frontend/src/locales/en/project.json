@@ -1,0 +1,55 @@
+{
+  "category": {
+    "1": "All Category",
+    "2": "Medical",
+    "3": "Children",
+    "4": "Education",
+    "5": "Family",
+    "6": "Disaster",
+    "7": "Other",
+    "8": "Projects found",
+    "9": "Find project"
+  },
+  "banner": {
+    "1": "Raised",
+    "2": "ETB",
+    "3": "Goal",
+    "4": "Days Left",
+    "5": "Make Donation"
+  },
+  "story": {
+    "1": "Story",
+    "2": "Recent Donations",
+    "3": "yr",
+    "4": "m",
+    "5": "d",
+    "6": "h",
+    "7": "min",
+    "8": "ago",
+    "9": "Anonymous",
+    "10": "Donated",
+    "11": "ETB"
+  },
+  "donation": {
+    "1": "Make Donation",
+    "2": "Payment Options",
+    "3": "First Name",
+    "4": "Last Name",
+    "5": "Phone Number",
+    "6": "Email Address",
+    "7": "Donation",
+    "8": "amount",
+    "9": "Make me anonymous",
+    "10": "Leave a comment",
+    "11": "Agree to Terms?",
+    "12": "Show Terms",
+    "13": "Donate Now"
+  },
+  "card": {
+    "1": "Days Left",
+    "2": "Raised",
+    "3": "ETB",
+    "4": "Goal",
+    "5": "Explore"
+  }
+}

@@ -3,11 +3,15 @@ import Box from '@mui/material/Box'
 import { DataGrid } from '@mui/x-data-grid'
 import axios from 'axios'
 import { AuthContext } from './../../../context/AuthContext';
+import { useTranslation } from 'react-i18next';
 
 
 export const UserDonationsTable = (props) => {
   const {currentUser} = useContext(AuthContext)
   const [donations, setDonations] = useState([])
+
+  const { t } = useTranslation()
+  
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -37,32 +41,26 @@ export const UserDonationsTable = (props) => {
   }
 
   const columns = [
-    { field: 'id', headerName: 'Donation ID', width: 120 },
+    { field: 'id', headerName: t('user:donation.1'), width: 170 },
     {
       field: 'fundraiser',
-      headerName: 'Fundraiser Name',
-      width: 200,
+      headerName: t('user:donation.2'),
+      width: 250,
     },
     {
       field: 'title',
-      headerName: 'Project Title',
-      width: 310,
+      headerName: t('user:donation.3'),
+      width: 350,
     },
     {
       field: 'donatedDate',
-      headerName: 'Donation Date',
+      headerName: t('user:donation.4'),
       width: 180,
     },
     {
       field: 'donatedAmount',
-      headerName: 'Donation Amount',
+      headerName: t('user:donation.5'),
       width: 180,
-      },
-      ,
-      {
-        field: 'paymentMethod',
-        headerName: 'Payment Method',
-        width: 140,
       },
   ]
   

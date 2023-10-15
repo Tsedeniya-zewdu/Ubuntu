@@ -5,9 +5,11 @@ import img1 from '../assets/banner-img-1.png'
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
 import { StyledButton } from './Common'
 import { useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 
 export const MainBanner = () => {
   const navigate = useNavigate()
+  const {t} = useTranslation()
   return (
     <div>
       <Box
@@ -55,7 +57,7 @@ export const MainBanner = () => {
                 color: '#383636',
               }}
             >
-              I am,  Because<br/>We are!
+             {t('home:banner.1')}<br/>{t('home:banner.2')}
             </Typography>
             <Typography
               variant="body1"
@@ -69,7 +71,7 @@ export const MainBanner = () => {
                 mt: { xs: '20px', sm: '30px', md: '40px' },
               }}
             >
-              Ubuntu - Empowering Hopeful Hearts Worldwide
+             {t('home:banner.3')}
             </Typography>
             <StyledButton
               variant="contained"
@@ -81,7 +83,7 @@ export const MainBanner = () => {
                 mt: { xs: '20px', sm: '30px', md: '40px' },
               }}
             >
-              Make Donation
+              {t('home:banner.4')}
             </StyledButton>
           </Box>
           <Box

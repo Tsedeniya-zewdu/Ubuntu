@@ -8,14 +8,25 @@ import {
   upload,
   uploadUpdate,
   deleteUpdate,
-  getPendingProjects,
-  approvePendingProject,
-  rejectPendingProject,
+  getPendingProjects1,
+  getPendingProjects2,
+  approvePendingProject1,
+  approvePendingProject2,
+  rejectPendingProject1,
+  rejectPendingProject2,
   updateProjectFromApp,
   getProjectsByCategory,
   searchProjects,
   getCompletedProjects,
   getAllProjects,
+  updateNews,
+  getCompletedProjectGraphData,
+  showNews,
+  hideNews,
+  getNewsProjects,
+  getExpiredProjects,
+  getRejectedProjects,
+  getPendingNews,
 } from '../controllers/project.js'
 
 const router = express.Router()
@@ -26,8 +37,28 @@ router.get('/', getProjects)
 // get completed projects 
 router.get('/completed', getCompletedProjects)
 
+// get Expired projects 
+router.get('/expired', getExpiredProjects)
+
+// get rejected projects 
+router.get('/rejected', getRejectedProjects)
+
+// get project news 
+router.get('/news', getNewsProjects)
+// get project news 
+router.get('/news-pending', getPendingNews)
+
 // get completed projects 
 router.get('/all', getAllProjects)
+
+// get completed project donation graph data 
+router.get('/completed/:id', getCompletedProjectGraphData)
+
+// make news shown
+router.get('/show/:id', showNews)
+
+// make news hidden
+router.get('/hide/:id', hideNews)
 
 // get projects by category
 router.get('/category/:id', getProjectsByCategory)
@@ -36,13 +67,16 @@ router.get('/category/:id', getProjectsByCategory)
 router.post('/search', searchProjects)
 
 // get all pending projects
-router.get('/pending', getPendingProjects)
+router.get('/pending1', getPendingProjects1)
+router.get('/pending2', getPendingProjects2)
 
 // approve a project
-router.get('/approve/:id', approvePendingProject)
+router.get('/approve1/:id', approvePendingProject1)
+router.get('/approve2/:id', approvePendingProject2)
 
 // reject a project
-router.get('/reject/:id', rejectPendingProject)
+router.get('/reject1/:id', rejectPendingProject1)
+router.get('/reject2/:id', rejectPendingProject2)
 
 // get a single project
 router.get('/project/:id', getProject)
@@ -78,6 +112,9 @@ router.patch('/update', updateProjectFromApp)
 
 // Update a project
 router.patch('/:id', updateProject)
+
+// Update a news
+router.put('/news/:id', updateNews)
 
 // Create new project
 router.post(

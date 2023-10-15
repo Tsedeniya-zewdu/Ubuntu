@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.scss'
+import "./i18next.js"
 import App from './App'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { AuthContextProvider } from './context/AuthContext'

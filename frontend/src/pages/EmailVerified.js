@@ -4,11 +4,14 @@ import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { Button } from '@mui/material'
+import { useTranslation } from 'react-i18next'
 
 export const EmailVerified = () => {
 
   // For redirecting
   const navigate = useNavigate()
+
+  const {t} = useTranslation()
 
   return (
     <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
@@ -31,7 +34,7 @@ export const EmailVerified = () => {
             <img src="/images/logo.png" alt="logo" />
           </Button>
           <Typography sx={{py: '15px', color: '#029a5b', textAlign: 'center'}} component="h1" variant="h5">
-           Your Email is verified successfully!
+           {t('verify.6')}
           </Typography>
           {/* <Typography variant="h6" sx={{ textAlign: 'center', fontWeight: '400'}}>
            Please click on the button below to login to your account!
@@ -45,7 +48,7 @@ export const EmailVerified = () => {
               sx={{ mt: 3, mb: 2, minWidth: '140px' }}
               onClick={()=> navigate('/login')}
             >
-              Login
+              {t('verify.7')}
             </Button>
           </Box>
         </Box>
@@ -56,9 +59,9 @@ export const EmailVerified = () => {
           align="center"
           sx={{ mt: 5, '>*': { color: 'inherit' } }}
         >
-          {'Copyright © '}
+          { t('verify.5')}{' © '}
 
-          <NavLink to="/">Ubuntu </NavLink>
+          <NavLink to="/">{t('verify.4')} </NavLink>
           {new Date().getFullYear()}
           {'.'}
         </Typography>

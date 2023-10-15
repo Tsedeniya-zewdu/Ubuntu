@@ -1,0 +1,37 @@
+- Team approval brief
+ - make two types of admin roles (normal and super)
+ - store info about who approve, reject, create, ... projects and news 
+  - Normal admin role (type: normal)
+    - send request to super admins to approve or reject project create and update request from fundraiser
+    - send request to create and post news details of completed projects 
+  - Super admin role (type: super)
+    - approve or reject requests coming from normal admin 
+- Team approval details
+ - add type field in admin model, which can take two values. 
+  - field name: type
+  - field value: normal, for normal admin roles
+  - field value: super, for super admin roles
+
+ - add two fields in project model, which can take id of normal admin and super admin
+  - field name: normalAdmin
+  - field name: superAdmin
+  - field value: normal admin Id
+  - field value: super admin Id
+
+ - currently found fields on project model
+  - status (open, expired, completed)
+  - approval (pending, approved, rejected)
+  - request (update, create)
+  - news (visible, hidden)
+
+ - additional fields on project model
+  - approval2 (pending, approved, rejected)
+
+ - update or create the following
+  - create project
+  - get approved projects
+  - get approved news
+  - get normal admin notifications 
+  - get super admin notification 
+  - normal admin send request to super admins
+  - super admin approve or reject request from normal admins 

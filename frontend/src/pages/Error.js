@@ -5,6 +5,7 @@ import Container from '@mui/material/Container'
 import { NavLink, useNavigate, useParams } from 'react-router-dom'
 import { Button } from '@mui/material'
 import axios from 'axios'
+import { useTranslation } from 'react-i18next'
 
 export const Error = () => {
   const {txRef} = useParams()
@@ -12,7 +13,7 @@ export const Error = () => {
   // For redirecting
   const navigate = useNavigate()
 
-  
+  const {t} = useTranslation()
 
 
   return (
@@ -36,10 +37,10 @@ export const Error = () => {
             <img src="/images/logo.png" alt="logo" />
           </Button>
           <Typography sx={{py: '15px', color: 'red'}} component="h1" variant="h5">
-           Donation Failed!
+           {t('thankyou.4')}
           </Typography>
           <Typography component="h1" variant="h5">
-           Please try again!
+           {t('thankyou.5')}
           </Typography>
           <Box component="form" noValidate sx={{ mt: 3 }}>
 
@@ -50,23 +51,11 @@ export const Error = () => {
               sx={{ mt: 3, mb: 2 }}
               onClick={()=> navigate('/')}
             >
-              Back to Home
+              {t('thankyou.3')}
             </Button>
           </Box>
         </Box>
 
-        <Typography
-          variant="body2"
-          color="text.secondary"
-          align="center"
-          sx={{ mt: 5, '>*': { color: 'inherit' } }}
-        >
-          {'Copyright © '}
-
-          <NavLink to="/">Ubuntu </NavLink>
-          {new Date().getFullYear()}
-          {'.'}
-        </Typography>
       </Container>
     </Box>
   )

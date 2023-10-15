@@ -7,9 +7,12 @@ import TwitterIcon from '@mui/icons-material/Twitter'
 import LinkedInIcon from '@mui/icons-material/LinkedIn'
 import ShareIcon from '@mui/icons-material/Share'
 import AccessTimeIcon from '@mui/icons-material/AccessTime'
+import { useTranslation } from 'react-i18next'
 
 export const ProjectBanner = (props) => {
   // console.log(props.project)
+
+  const {t} = useTranslation()
 
   const [video, setVideo] = useState(false)
   const [progress, setProgress] = useState()
@@ -309,7 +312,7 @@ export const ProjectBanner = (props) => {
                     },
                   }}
                 >
-                  Raised<span>{props.project.raised} ETB</span>
+                  {t('project:banner.1')}<span>{props.project.raised}  {t('project:banner.2')}</span>
                 </Typography>
               </Box>
               <Typography
@@ -370,7 +373,7 @@ export const ProjectBanner = (props) => {
                       },
                     }}
                   >
-                    Goal<span>{props.project.amount} Birr</span>
+                     {t('project:banner.3')}<span>{props.project.amount}  {t('project:banner.2')}</span>
                   </Typography>
                 </Box>
               </Box>
@@ -401,7 +404,7 @@ export const ProjectBanner = (props) => {
                   }}
                 >
                   {daysLeft}
-                  <span>Days Left</span>
+                  <span> {t('project:banner.4')}</span>
                 </Typography>
               </Box>
             </Box>
@@ -449,7 +452,7 @@ export const ProjectBanner = (props) => {
                   alignSelf: { xs: 'center' },
                 }}
               >
-                Make Donation
+                 {t('project:banner.5')}
               </Button>
             </Box>
           </Box>

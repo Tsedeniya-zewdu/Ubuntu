@@ -2,65 +2,55 @@ import React from 'react'
 import './NewsComp.scss'
 import { NewsCard } from './NewsCard'
 import { Box, Grid } from '@mui/material'
-
-const data = [
-  {
-    title: 'Clean Water Initiative',
-    text:
-      'Raised funds to install water filtration systems in underprivileged communities, providing clean and safe drinking water to thousands.',
-    img: '/images/news-card-img-1.jpg',
-  },
-  {
-    title: 'Education for All',
-    text:
-      'Collected donations to support scholarships and educational resources for children from low-income families, empowering them to pursue their dreams and break the cycle of poverty.',
-    img: '/images/education-img-1.png',
-  },
-  {
-    title: 'Emergency Relief Fund',
-    text:
-      'Mobilized resources to provide immediate aid and assistance to those affected by natural disasters, offering essential supplies, shelter, and medical support.',
-    img: '/images/news-card-img-3.jpg',
-  },
-  {
-    title: 'Food Drive Campaign',
-    text:
-      'Organized a community-wide food drive to collect non-perishable items for local food banks, ensuring access to nutritious meals for families facing food insecurity.',
-    img: '/images/news-card-img-4.jpg',
-  },
-  {
-    title: 'Healthcare Access Project',
-    text:
-      'Raised funds to establish mobile clinics and medical facilities in remote areas, providing healthcare services and necessary medications to vulnerable populations.',
-    img: '/images/news-card-img-5.jpg',
-  },
-  
-]
+import { useTranslation } from 'react-i18next'
 
 export const NewsComp = (props) => {
+  console.log(props.project)
+  const { t } = useTranslation()
+  
   return (
     <div className="news-comp-wrapper container-wrapper">
       <Box className="news-comp container">
-        <Grid container
-                    spacing={2}>
-          {props.projects.map((data, idx) => {
-            return (
-              <Grid 
-                    key={idx}
-                    item
-                    xs={12}
-                    sm={6}
-                    md={4}
-                >
-                    <NewsCard title={data.title}
-                        text={data.desc}
-                  img={data.images[0]}
-                  path={data._id}
-                    />
-              </Grid>
-            )
-          })}
-        </Grid>
+        {props.projects.map((data, idx) => {
+          let dateNow = new Date()
+          let dateObj = new Date(data.released)
+          let year = dateNow.getUTCFullYear() - dateObj.getUTCFullYear()
+          let month = dateNow.getUTCMonth() - dateObj.getUTCMonth()
+          let day = dateNow.getUTCDate() - dateObj.getUTCDate()
+          let hour = dateNow.getUTCHours() - dateObj.getUTCHours()
+          let min = dateNow.getUTCMinutes() - dateObj.getUTCMinutes()
+          year = year != 0 ? `${year}${t('project:story.3')}` : ''
+          month = month != 0 && month > 0 ? `${month}${t('project:story.4')}` : ''
+          day = day != 0 && day > 0 ? `${day}${t('project:story.5')}` : ''
+          hour = hour != 0 && hour > 0 ? `${hour}${t('project:story.6')}` : ''
+          min =
+            min != 0 && min > 0
+              ? `${min}${t('project:story.7')}`
+              : `0${t('project:story.7')}`
+          let timeAndDate
+          if (year != '') {
+            timeAndDate = `${year} ${t('project:story.8')}`
+          } else if (month != '') {
+            timeAndDate = `${month}  ${t('project:story.8')}`
+          } else if (day != '') {
+            timeAndDate = `${day}  ${t('project:story.8')}`
+          } else if (hour != '') {
+            timeAndDate = `${hour}  ${t('project:story.8')}`
+          } else {
+            timeAndDate = `${min}  ${t('project:story.8')}`
+          }
+          return (
+            <NewsCard
+              title={data.title}
+              text={data.newsdesc}
+              img={`http://localhost:5000/api/uploads/${data.newsimages[0]}`}
+              path={data._id}
+              released={timeAndDate}
+              name={data.details[0].name}
+              avator={data.details[0].image}
+            />
+          )
+        })}
       </Box>
     </div>
   )

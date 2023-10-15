@@ -19,6 +19,7 @@ import axios from 'axios'
 import ClearOutlinedIcon from '@mui/icons-material/ClearOutlined'
 import AddIcon from '@mui/icons-material/Add'
 import { AuthContext } from './../context/AuthContext'
+import { useTranslation } from 'react-i18next'
 
 export const CreateProjectForm = () => {
   const [inputs, setInputs] = useState({
@@ -37,6 +38,8 @@ export const CreateProjectForm = () => {
   const [category, setCategory] = useState('')
 
   const navigate = useNavigate()
+
+  const {t} = useTranslation()
 
   // get current fundraiser
   const { currentUser } = useContext(AuthContext)
@@ -204,7 +207,7 @@ export const CreateProjectForm = () => {
                 }}
                 startIcon={<ArrowBackIcon />}
               >
-                Back
+                {t('btn.1')}
               </Button>
             </Box>
             <Typography
@@ -215,7 +218,7 @@ export const CreateProjectForm = () => {
                 pb: { xs: '20px' },
               }}
             >
-              Create Project
+              {t('title.8')}
             </Typography>
           </Box>
           <form id="create-project-form">
@@ -233,37 +236,37 @@ export const CreateProjectForm = () => {
               >
                 <Box sx={{ '>*': { width: { xs: '100%' } } }}>
                   <Typography variant="h6" sx={{ mb: '10px' }}>
-                    Project title
+                    {t('fundraiser:project.17')}
                   </Typography>
                   <TextField
                     sx={{ size: { xs: 'small', md: 'medium' } }}
-                    label="Project Title"
+                    label= {t('fundraiser:project.17')}
                     name="title"
                     onChange={handleChange}
                   />
                 </Box>
                 <Box sx={{ '>*': { width: { xs: '100%' } } }}>
                   <Typography variant="h6" sx={{ mb: '10px' }}>
-                    Project Catagory
+                  {t('fundraiser:project.18')}
                   </Typography>
                   <FormControl>
                     <InputLabel id="demo-simple-select-label">
-                      Select Category
+                    {t('fundraiser:project.19')}
                     </InputLabel>
                     <Select
                       labelId="demo-simple-select-label"
                       id="demo-simple-select"
                       value={category}
-                      label="Select Category"
+                      label= {t('fundraiser:project.19')}
                       name="category"
                       onChange={handleCategory}
                     >
-                      <MenuItem value="Medical">Medical</MenuItem>
-                      <MenuItem value="Children">Children</MenuItem>
-                      <MenuItem value="Education">Education</MenuItem>
-                      <MenuItem value="Family">Family</MenuItem>
-                      <MenuItem value="Disaster">Disaster</MenuItem>
-                      <MenuItem value="Wildlife">Wildlife</MenuItem>
+                      <MenuItem value="Medical">{t('category.1.title')}</MenuItem>
+                        <MenuItem value="Children">{t('category.2.title')}</MenuItem>
+                        <MenuItem value="Education">{t('category.3.title')}</MenuItem>
+                        <MenuItem value="Family">{t('category.4.title')}</MenuItem>
+                        <MenuItem value="Disaster">{t('category.5.title')}</MenuItem>
+                        <MenuItem value="Other">{t('category.6.title')}</MenuItem>
                     </Select>
                   </FormControl>
                 </Box>
@@ -281,11 +284,11 @@ export const CreateProjectForm = () => {
               >
                 <Box sx={{ '>*': { width: { xs: '100%' } } }}>
                   <Typography variant="h6" sx={{ mb: '10px' }}>
-                    Amount needed
+                  {t('fundraiser:project.20')}
                   </Typography>
                   <TextField
                     sx={{ size: { xs: 'small', md: 'medium' } }}
-                    label="Goal"
+                    label= {t('fundraiser:project.10')}
                     type="number"
                     name="amount"
                     onChange={handleChange}
@@ -293,7 +296,7 @@ export const CreateProjectForm = () => {
                 </Box>
                 <Box sx={{ '>*': { width: { xs: '100%' } } }}>
                   <Typography variant="h6" sx={{ mb: '10px' }}>
-                    Deadline
+                  {t('fundraiser:project.21')}
                   </Typography>
                   <TextField
                     sx={{ size: { xs: 'small', md: 'medium' } }}
@@ -317,7 +320,7 @@ export const CreateProjectForm = () => {
               >
                 <Box>
                   <Typography variant="h6" sx={{ mb: '10px' }}>
-                    Project images
+                  {t('fundraiser:project.22')}
                   </Typography>
 
                   {uploadedImages.map((img, idx) => {
@@ -356,7 +359,7 @@ export const CreateProjectForm = () => {
                       component="label"
                       startIcon={<AddIcon />}
                     >
-                      Add Images
+                       {t('fundraiser:project.23')}
                       <input
                         onChange={handleImageEvent}
                         id="image-input"
@@ -372,7 +375,7 @@ export const CreateProjectForm = () => {
 
                 <Box>
                   <Typography variant="h6" sx={{ mb: '10px' }}>
-                    Project video
+                  {t('fundraiser:project.24')}
                   </Typography>
                   {uploadedVideo[0] && (
                     <Card
@@ -408,7 +411,7 @@ export const CreateProjectForm = () => {
                         component="label"
                         startIcon={<AddIcon />}
                       >
-                        Add Video
+                         {t('fundraiser:project.25')}
                         <input
                           id="video-input"
                           hidden
@@ -426,7 +429,7 @@ export const CreateProjectForm = () => {
               {/* Add Reference documents */}
               <Box>
                 <Typography variant="h6" sx={{ mb: '10px' }}>
-                  Reference Documents
+                {t('fundraiser:project.26')}
                 </Typography>
 
                 {uploadedDocs.map((doc, idx) => {
@@ -466,7 +469,7 @@ export const CreateProjectForm = () => {
                     component="label"
                     startIcon={<AddIcon />}
                   >
-                    Add Documents
+                     {t('fundraiser:project.27')}
                     <input
                       onChange={handleDocEvent}
                       id="document-input"
@@ -483,7 +486,7 @@ export const CreateProjectForm = () => {
               {/* Short Story */}
               <Box>
                 <Typography variant="h6" sx={{ mb: '10px' }}>
-                  Project Short Story
+                {t('fundraiser:project.28')}
                 </Typography>
                 <TextField
                   rows={2}
@@ -504,7 +507,7 @@ export const CreateProjectForm = () => {
                 }}
               >
                 <Typography variant="h6" sx={{ mb: '10px' }}>
-                  Project Detail Story
+                {t('fundraiser:project.29')}
                 </Typography>
                 <ReactQuill theme="snow" value={story} onChange={setStory} />
               </Box>
@@ -527,7 +530,7 @@ export const CreateProjectForm = () => {
                   }}
                   onClick={handleSave}
                 >
-                  Save
+                  {t('btn.7')}
                 </Button>
                 <Button
                   variant="contained"
@@ -538,7 +541,7 @@ export const CreateProjectForm = () => {
                   }}
                   onClick={() => navigate('/fundraiser-projects')}
                 >
-                  Cancel
+                  {t('btn.3')}
                 </Button>
               </Box>
             </Box>

@@ -10,6 +10,7 @@ import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined'
 import axios from 'axios'
 import parse from 'html-react-parser'
 import AccessTimeIcon from '@mui/icons-material/AccessTime'
+import { useTranslation } from 'react-i18next'
 
 export const ProjectDetailsComp = (props) => {
   const [video, setVideo] = useState(false)
@@ -17,6 +18,8 @@ export const ProjectDetailsComp = (props) => {
   const [progress, setProgress] = useState()
   console.log(props.project)
   // change banner image and text after some time interval
+
+  const {t} = useTranslation()
 
   const [activeIdx, setActiveIdx] = useState(0)
   useEffect(() => {
@@ -141,17 +144,17 @@ export const ProjectDetailsComp = (props) => {
           <Box sx={{ width: '100%' }}>
             {/* Project Catagory */}
             <Typography variant="h6">
-              <span className="category-title">Category: </span>
+              <span className="category-title">{t('fundraiser:project.5')}</span>
               <span className="category-text">{props.project.category}</span>
             </Typography>
             {/* Project Title */}
             <Typography variant="h4">
-              <span className="project-title">Title: </span>{' '}
+              <span className="project-title">{t('fundraiser:project.6')}</span>{' '}
               <span className="project-title-text">{props.project.title}</span>
             </Typography>
 
             {/* Project Description */}
-            <Typography className="desc-title">Short Description</Typography>
+            <Typography className="desc-title">{t('fundraiser:project.7')}</Typography>
             <Typography variant="body2" className="desc-text">
               {props.project.desc}
             </Typography>
@@ -159,9 +162,9 @@ export const ProjectDetailsComp = (props) => {
             <Box className="raised-goal-wrapper">
               <Box>
                 <Typography>
-                  <span className="raised-title">Raised: </span>
+                  <span className="raised-title">{t('fundraiser:project.8')}</span>
                   <span className="raised-text">
-                    {props.project.raised} ETB
+                    {props.project.raised} {t('fundraiser:project.9')}
                   </span>
                 </Typography>
               </Box>
@@ -187,9 +190,9 @@ export const ProjectDetailsComp = (props) => {
               <Box className="goal-wrapper">
                 <Box>
                   <Typography>
-                    <span className="goal-title">Goal: </span>
+                    <span className="goal-title">{t('fundraiser:project.10')}</span>
                     <span className="goal-text">
-                      {props.project.amount} ETB
+                      {props.project.amount} {t('fundraiser:project.9')}
                     </span>
                   </Typography>
                 </Box>
@@ -221,13 +224,13 @@ export const ProjectDetailsComp = (props) => {
                   }}
                 >
                   {daysLeft}
-                  <span>Days Left</span>
+                  <span>{t('fundraiser:project.11')}</span>
                 </Typography>
               </Box>
             </Box>
             {/* { Reference documents} */}
             <Box>
-              <Typography className="ref-title">Reference Documents</Typography>
+              <Typography className="ref-title">{t('fundraiser:project.12')}</Typography>
               {props.project.docs &&
                 props.project.docs.map((data, idx) => {
                   return (
@@ -266,7 +269,7 @@ export const ProjectDetailsComp = (props) => {
               mb: '15px',
             }}
           >
-            Story
+            {t('fundraiser:project.13')}
           </Typography>
           {/* Project Description */}
           <Box
@@ -302,7 +305,7 @@ export const ProjectDetailsComp = (props) => {
                 pb: { xs: '20px', sm: '25px', md: '30px' },
               }}
             >
-              Recent Donations
+              {t('fundraiser:project.14')}
             </ListSubheader>
             <Divider light />
             {donators.map((donator, idx) => {
@@ -313,22 +316,22 @@ export const ProjectDetailsComp = (props) => {
               let day = dateNow.getUTCDate() - dateObj.getUTCDate()
               let hour = dateNow.getUTCHours() - dateObj.getUTCHours()
               let min = dateNow.getUTCMinutes() - dateObj.getUTCMinutes()
-              year = year != 0 ? `${year}yr` : ''
-              month = month != 0 && month > 0 ? `${month}m` : ''
-              day = day != 0 && day > 0 ? `${day}d` : ''
-              hour = hour != 0 && hour > 0 ? `${hour}h` : ''
-              min = min != 0 && min > 0 ? `${min}min` : `0m`
+              year = year != 0 ? `${year}${t('time.1')}` : ''
+              month = month != 0 && month > 0 ? `${month}${t('time.2')}` : ''
+              day = day != 0 && day > 0 ? `${day}${t('time.3')}` : ''
+              hour = hour != 0 && hour > 0 ? `${hour}${t('time.4')}` : ''
+              min = min != 0 && min > 0 ? `${min}${t('time.5')}` : `0${t('time.5')}`
               let timeAndDate
               if (year != '') {
-                timeAndDate = `${year} ago`
+                timeAndDate = `${year} ${t('time.6')}`
               } else if (month != '') {
-                timeAndDate = `${month} ago`
+                timeAndDate = `${month}  ${t('time.6')}`
               } else if (day != '') {
-                timeAndDate = `${day} ago`
+                timeAndDate = `${day}  ${t('time.6')}`
               } else if (hour != '') {
-                timeAndDate = `${hour} ago`
+                timeAndDate = `${hour}  ${t('time.6')}`
               } else {
-                timeAndDate = `${min} ago`
+                timeAndDate = `${min}  ${t('time.6')}`
               }
               return (
                 <Box key={idx} sx={{ mr: '20px' }}>
@@ -374,7 +377,7 @@ export const ProjectDetailsComp = (props) => {
                           gutterBottom
                         >
                           {donator.anonymous
-                            ? 'Anonymous'
+                            ? t('time.7')
                             : donator.donator}
                         </Typography>
                         {/* Date */}
@@ -402,7 +405,7 @@ export const ProjectDetailsComp = (props) => {
                           fontWeight: '500',
                         }}
                       >
-                        Donated
+                        {t('fundraiser:project.15')}
                       </Typography>
                       <Typography
                         variant="h5"
@@ -413,7 +416,7 @@ export const ProjectDetailsComp = (props) => {
                           whiteSpace: 'nowrap',
                         }}
                       >
-                        {donator.amount}{' ETB'}
+                        {donator.amount}{t('fundraiser:project.16')}
                         
                       </Typography>
                     </Box>

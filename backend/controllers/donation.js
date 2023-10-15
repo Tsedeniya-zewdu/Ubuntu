@@ -74,6 +74,45 @@ export const getProjectDonations = async (req, res) => {
   res.status(200).send(joinedData)
 }
 
+// get donations data per project
+export const getDonationGraphData = async (req, res) => {
+  const { id } = req.params
+  let joinedData = await DonationModel.aggregate([
+    {
+      $lookup: {
+        from: 'fundraisers',
+        localField: 'fundraiser',
+        foreignField: '_id',
+        as: 'fundraiser',
+      },
+    },
+    {
+      $lookup: {
+        from: 'projects',
+        localField: 'project',
+        foreignField: '_id',
+        as: 'project',
+      },
+    },
+    {
+      $lookup: {
+        from: 'users',
+        localField: 'user',
+        foreignField: '_id',
+        as: 'user',
+      },
+    },
+    {
+      $match: {
+        projectId: id,
+      },
+    },
+    { $sort: { updatedAt: -1 } },
+  ])
+  res.status(200).send(joinedData)
+  
+}
+
 export const getUserDonations = async (req, res) => {
   const { id } = req.params
   if (!mongoose.Types.ObjectId.isValid(id)) {

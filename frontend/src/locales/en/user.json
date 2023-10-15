@@ -1,0 +1,25 @@
+{
+   "donation": {
+      "title": "My Donations History",
+      "1": "Donation ID",
+      "2": "Fundraiser Name",
+      "3": "Project Title",
+      "4": "Donation Date",
+      "5": "Donation Amount (ETB)"
+   },
+   "profile": {
+      "1": "Profile Picture",
+      "2": "Change Profile",
+      "3": "Remove Profile",
+      "4": "Basic information",
+      "5": "Full name",
+      "6": "Email address"
+   },
+   "notification": {
+      "1": "posted new project: ",
+      "2": "Raised Amount: ",
+      "3": "ETB",
+      "4": "Goal: ",
+      "5": "Days Left: "
+   }
+}
