@@ -66,6 +66,7 @@ export const ReportsComp = () => {
     const getRejected = async () => {
       let res = await axios.get('/projects/rejected')
       try {
+        
         setRejected(res.data.length)
       } catch (err) {
         console.log(err)

@@ -333,7 +333,7 @@ export const ReportsCompFundraiser = () => {
         <div className="chart-main-wrapper">
           <div className="chart-wrapper chart-wrapper-1">
             <div className="chart">
-              <Typography className="title">Donations Status</Typography>
+              <Typography className="title">Fundraiser's Donations Status</Typography>
               {Object.keys(barChartData).length != 0 && (
                 <Bar data={barChartData} />
               )}
@@ -341,7 +341,7 @@ export const ReportsCompFundraiser = () => {
           </div>
           <div className="chart-wrapper chart-wrapper-2">
             <div className="chart">
-              <Typography className="title">Projects Status</Typography>
+              <Typography className="title">Fundraiser's Projects Status</Typography>
               {Object.keys(chartData).length != 0 && <Pie data={chartData} />}
             </div>
           </div>

@@ -21,7 +21,7 @@ export const getProjects = async (req, res) => {
     {
       $match: {
         projectApproval1: 'Approved',
-        projectApproval2: "Approved",
+        projectApproval2: 'Approved',
         status: 'Open',
       },
     },
@@ -44,7 +44,7 @@ export const getCompletedProjects = async (req, res) => {
     {
       $match: {
         projectApproval1: 'Approved',
-        projectApproval2: "Approved",
+        projectApproval2: 'Approved',
         status: 'Completed',
       },
     },
@@ -87,7 +87,8 @@ export const getRejectedProjects = async (req, res) => {
     },
     {
       $match: {
-        status: 'Rejected',
+        projectApproval1: 'Rejected',
+        projectApproval2: 'Rejected',
       },
     },
     { $sort: { updatedAt: -1 } },
@@ -133,7 +134,7 @@ export const getPendingNews = async (req, res) => {
     {
       $match: {
         status: 'Completed',
-        news: 'Hidden'
+        news: 'Hidden',
       },
     },
     { $sort: { updatedAt: -1 } },
@@ -141,7 +142,7 @@ export const getPendingNews = async (req, res) => {
   res.status(200).send(joinedData)
 }
 
-// get completed projects donations graph data 
+// get completed projects donations graph data
 export const getCompletedProjectGraphData = async (req, res) => {
   const { id } = req.params
   // let pid = mongoose.Types.ObjectId(id);
@@ -183,32 +184,30 @@ export const getCompletedProjectGraphData = async (req, res) => {
     { $sort: { createdAt: 1 } },
   ])
 
-  let donationData 
+  let donationData
   let donationsData = []
   let donationCounter = 0
 
+  let initialDateObj = new Date(joinedData[0].createdAt)
+  donationData = {
+    year: initialDateObj.getUTCFullYear(),
+    yAmount: 0,
+    months: [
+      {
+        month: initialDateObj.getUTCMonth(),
+        mAmount: 0,
+        days: [
+          {
+            day: initialDateObj.getUTCDay(),
+            dAmount: 0,
+          },
+        ],
+      },
+    ],
+  }
+  donationsData.push(donationData)
 
-
-    let initialDateObj = new Date(joinedData[0].createdAt)
-    donationData = {
-      year: initialDateObj.getUTCFullYear(),
-      yAmount: 0,
-      months: [
-        {
-          month: initialDateObj.getUTCMonth(),
-          mAmount: 0,
-          days: [
-            {
-              day: initialDateObj.getUTCDay(),
-              dAmount: 0
-            }
-          ]
-        }
-      ]
-    }
-    donationsData.push(donationData)
-
-  joinedData.forEach((donation) => { 
+  joinedData.forEach((donation) => {
     let currentDateObj = new Date(donation.createdAt)
     let currentYear = currentDateObj.getUTCFullYear()
     let currentMonth = currentDateObj.getUTCMonth() + 1
@@ -237,62 +236,62 @@ export const getCompletedProjectGraphData = async (req, res) => {
     //   console.log("First Year")
     //   donationsData.push(donationData)
     // } else if (donationsData.length > 0) {
-      if (currentYear == donationsData[donationsData.length - 1].year) { 
-        console.log("Same Year")
-        // yes -> add amount on year amount , 
-        donationsData[donationsData.length - 1].yAmount += currentYearAmount
-        // then check current month match with previous
-        donationsData[donationsData.length - 1].months.forEach((monthData) => {
-          if (currentMonth == monthData.month) { 
-            monthData.mAmount = currentMonthAmount
-            // then check current day match with previous
-            monthData.days.forEach((dayData) => {
-              if (currentDay == dayData.day) { 
-                dayData.dAmount = currentDayAmount
-              } else {
-                // add new day data
-                let newDay = {
-                  day: currentDay,
-                  dAmount: currentDayAmount
-                }
-                monthData.days.push(newDay)
+    if (currentYear == donationsData[donationsData.length - 1].year) {
+      console.log('Same Year')
+      // yes -> add amount on year amount ,
+      donationsData[donationsData.length - 1].yAmount += currentYearAmount
+      // then check current month match with previous
+      donationsData[donationsData.length - 1].months.forEach((monthData) => {
+        if (currentMonth == monthData.month) {
+          monthData.mAmount = currentMonthAmount
+          // then check current day match with previous
+          monthData.days.forEach((dayData) => {
+            if (currentDay == dayData.day) {
+              dayData.dAmount = currentDayAmount
+            } else {
+              // add new day data
+              let newDay = {
+                day: currentDay,
+                dAmount: currentDayAmount,
               }
-            })
-          } else {
-            // add new month data
-            let newMonth = {
-              month: currentMonth,
-              mAmount: currentMonthAmount,
-              days: [
-                {
-                  day: currentDay,
-                  dAmount: currentDayAmount
-                }
-              ]
+              monthData.days.push(newDay)
             }
-            donationsData[donationsData.length - 1].months.push(newMonth)
+          })
+        } else {
+          // add new month data
+          let newMonth = {
+            month: currentMonth,
+            mAmount: currentMonthAmount,
+            days: [
+              {
+                day: currentDay,
+                dAmount: currentDayAmount,
+              },
+            ],
           }
-        })
-      } else {
-        console.log("New Year")
-        donationData = {
-          year: currentYear,
-          yAmount: currentYearAmount,
-          months: [
-            {
-              month: currentMonth,
-              mAmount: currentMonthAmount,
-              days: [
-                {
-                  day: currentDay,
-                  dAmount: currentDayAmount
-                }
-              ]
-            }
-          ]
+          donationsData[donationsData.length - 1].months.push(newMonth)
         }
-        donationsData.push(donationData)  
+      })
+    } else {
+      console.log('New Year')
+      donationData = {
+        year: currentYear,
+        yAmount: currentYearAmount,
+        months: [
+          {
+            month: currentMonth,
+            mAmount: currentMonthAmount,
+            days: [
+              {
+                day: currentDay,
+                dAmount: currentDayAmount,
+              },
+            ],
+          },
+        ],
       }
+      donationsData.push(donationData)
+    }
     // }
     // donationCounter++
     // console.log(donationCounter)
@@ -303,7 +302,6 @@ export const getCompletedProjectGraphData = async (req, res) => {
   })
 
   res.status(200).send(donationsData)
-
 }
 
 // all approved projects
@@ -530,8 +528,18 @@ export const createProject = async (req, res) => {
   let status = 'Pending'
   let request = 'Create'
   let projectApproval1 = 'Pending'
-  let projectApproval2 = "waiting"
+  let projectApproval2 = 'waiting'
   let fundraiserRequestedAt = Date.now()
+  // let newsApproval1 = ''
+  // let newsApproval2 = ''
+  // let projectApprovedAt = ''
+  // let projectRejectedAt = ''
+  // let newsApprovedAt = ''
+  // let projectApprovedBy1 = ''
+  // let projectApprovedBy2 = ''
+  // let newsApprovedBy1 = ''
+  // let newsApprovedBy2 = ''
+  // let
 
   uploadedFiles.map((data) => {
     if (data.slice(0, 3) == 'img') {
@@ -561,7 +569,7 @@ export const createProject = async (req, res) => {
       projectApproval1,
       request,
       projectApproval2,
-      fundraiserRequestedAt
+      fundraiserRequestedAt,
     })
     console.log('project ADDED')
     // Reset variables
@@ -627,7 +635,7 @@ export const updateProject = async (req, res) => {
   let status = 'Pending'
   let request = 'Update'
   let projectApproval1 = 'Pending'
-  let projectApproval2 = "waiting"
+  let projectApproval2 = 'waiting'
   let fundraiserRequestedAt = Date.now()
   const project = await ProjectModel.findOneAndUpdate(
     { _id: id },
@@ -637,7 +645,7 @@ export const updateProject = async (req, res) => {
       request: request,
       projectApproval1: projectApproval1,
       projectApproval2: projectApproval2,
-      fundraiserRequestedAt: fundraiserRequestedAt
+      fundraiserRequestedAt: fundraiserRequestedAt,
     },
   )
 
@@ -682,7 +690,7 @@ export const updateProjectFromApp = async (req, res) => {
       {
         ...req.body,
         projectCompletedAt: Date.now(),
-        news: 'Hidden'
+        news: 'Hidden',
       },
     )
   } else {
@@ -693,7 +701,6 @@ export const updateProjectFromApp = async (req, res) => {
       },
     )
   }
-  
 
   if (!project) {
     return res.status(404).json({ error: 'No such project data' })
@@ -736,8 +743,8 @@ export const approvePendingProject1 = async (req, res) => {
   let projectApproval1 = 'Approved'
   // let status = 'Open'
   let adminRequestedAt = Date.now()
-  let adminRequestType = "Approve"
-  let projectApproval2 = "Pending"
+  let adminRequestType = 'Approve'
+  let projectApproval2 = 'Pending'
   const project = await ProjectModel.findOneAndUpdate(
     { _id: id },
     {
@@ -745,7 +752,7 @@ export const approvePendingProject1 = async (req, res) => {
       // status: status,
       adminRequestedAt: adminRequestedAt,
       adminRequestType: adminRequestType,
-      projectApproval2: projectApproval2
+      projectApproval2: projectApproval2,
     },
   )
 
@@ -968,9 +975,9 @@ export const rejectPendingProject1 = async (req, res) => {
   }
   let projectApproval1 = 'Rejected'
   // let status = 'Closed'
-  let adminRequestType = "Reject"
+  let adminRequestType = 'Reject'
   let adminRequestedAt = Date.now()
-  let projectApproval2 = "Pending"
+  let projectApproval2 = 'Pending'
   const project = await ProjectModel.findOneAndUpdate(
     { _id: id },
     {
@@ -978,7 +985,7 @@ export const rejectPendingProject1 = async (req, res) => {
       // status: status,
       adminRequestType: adminRequestType,
       adminRequestedAt: adminRequestedAt,
-      projectApproval2: projectApproval2
+      projectApproval2: projectApproval2,
     },
   )
 
@@ -1002,7 +1009,7 @@ export const rejectPendingProject2 = async (req, res) => {
     {
       projectApproval2: projectApproval2,
       status: status,
-      projectRejectedAt: projectRejectedAt
+      projectRejectedAt: projectRejectedAt,
     },
   )
 
